@@ -1,0 +1,5 @@
+{
+  "diagnostic.checkCurrentLine": true,
+  "coc.preferences.formatOnSaveFiletypes":  ["*"],
+  "rust-analyzer.hover.documentation.enable": true,
+}
