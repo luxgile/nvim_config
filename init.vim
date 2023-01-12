@@ -32,7 +32,8 @@ nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>b <cmd>Telescope buffers<cr>
 nnoremap <leader>fbw <cmd>Telescope file_browser<cr>
 nnoremap <leader>fbc <cmd>Telescope file_browser path=%:h<cr>
-nnoremap <leader>t <cmd>exe v:count1 . "ToggleTerm"<cr>
+nnoremap <leader>tw <cmd>exe v:count1 . "ToggleTerm"<cr>
+nnoremap <leader>tc <cmd>exe v:count1 . "ToggleTerm dir=%:h"<cr>
 nnoremap <leader>ss <cmd>Telescope possession list<cr>
 
 
