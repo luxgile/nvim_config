@@ -56,6 +56,38 @@ return require('packer').startup(function(use)
 		end 
 	}
 
+	-- MASON - LSP MANAGER
+	use {
+		'williamboman/mason.nvim',
+		config = function()
+			require("mason").setup()
+		end
+	}
+	use {
+		'williamboman/mason-lspconfig.nvim',
+		config = function()
+			require("mason-lspconfig").setup()
+		end
+	}
+	use 'neovim/nvim-lspconfig'
+
+
+	-- RUST 
+	use {
+		'simrat39/rust-tools.nvim',
+		config = function()
+			require("rust-tools").setup({
+				server = {
+					on_attach = function(_, bufnr)
+						-- Hover actions
+						vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+						-- Code action groups
+						vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+					end,
+				},
+			})
+		end
+	}
 
 if packer_bootstrap then
 	require('packer').sync()
