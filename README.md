@@ -4,6 +4,7 @@
 - Open nvim and run:
     - :PlugInstall
     - :PackerInstall
+    - :PackerUpdate
 
 # Keysbindings
 - F10 - Open settings file
