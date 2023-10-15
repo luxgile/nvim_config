@@ -54,13 +54,14 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'APZelos/blamer.nvim'
 Plug 'easymotion/vim-easymotion'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'projekt0n/github-nvim-theme'
+" Plug 'projekt0n/github-nvim-theme'
+Plug 'ful1e5/onedark.nvim'
 call plug#end()
 
 " Packer init.
 lua require('plugins')
 
-colorscheme github_dark
+colorscheme onedark
 
 
 
