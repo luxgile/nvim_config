@@ -5,7 +5,7 @@
 - git
 
 # Quickstart
-- **Windows**: git clone https://github.com/luxgile/nvim_config.git ~/AppData/Local/nvim/
+- **Windows**: git clone https://github.com/luxgile/nvim_config.git $HOME/AppData/Local/nvim/
 - **Linux**: git clone https://github.com/luxgile/nvim_config.git ~/.config/nvim/
 - Open nvim and run:
     - :PlugInstall
