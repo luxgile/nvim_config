@@ -1,4 +1,3 @@
-
 -- GENERAL SETTINGS
 vim.keymap.set('n', '<F10>', ':e ~/AppData/Local/nvim/init.lua<CR>')
 
@@ -8,7 +7,7 @@ vim.opt.ttimeoutlen = 100
 
 vim.opt.background = "dark"
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.completeopt = {'noinsert', 'menuone', 'noselect'}
+vim.opt.completeopt = { 'noinsert', 'menuone', 'noselect' }
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
 vim.api.nvim_set_option('updatetime', 300)
 vim.opt.number = true
@@ -45,17 +44,19 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  { 'nvim-telescope/telescope.nvim', tag = '0.1.4'},
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-telescope/telescope.nvim',            tag = '0.1.4' },
+  { 'nvim-treesitter/nvim-treesitter',          build = ':TSUpdate' },
   { 'nvim-tree/nvim-web-devicons' },
   { 'simrat39/rust-tools.nvim' },
   { 'neovim/nvim-lspconfig' },
   { 'nvim-lualine/lualine.nvim' },
-  { "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     lazy = false,
     opts = {},
   },
-  { 'williamboman/mason-lspconfig.nvim',
+  {
+    'williamboman/mason-lspconfig.nvim',
     lazy = false,
     opts = {},
   },
@@ -73,19 +74,19 @@ require('lazy').setup({
       vim.cmd([[colorscheme tokyonight]])
     end
   },
-    -- Completion framework:
+  -- Completion framework:
   { 'hrsh7th/nvim-cmp' },
 
-    -- LSP completion source:
+  -- LSP completion source:
   { 'hrsh7th/cmp-nvim-lsp' },
 
-    -- Useful completion sources:
-  {'hrsh7th/cmp-nvim-lua'},
-   {'hrsh7th/cmp-nvim-lsp-signature-help'},
-   {'hrsh7th/cmp-vsnip'},
-     {'hrsh7th/cmp-path'},
-     {'hrsh7th/cmp-buffer'},
-     {'hrsh7th/vim-vsnip'},
+  -- Useful completion sources:
+  { 'hrsh7th/cmp-nvim-lua' },
+  { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+  { 'hrsh7th/cmp-vsnip' },
+  { 'hrsh7th/cmp-path' },
+  { 'hrsh7th/cmp-buffer' },
+  { 'hrsh7th/vim-vsnip' },
 })
 
 -- LUA LINE SETUP
@@ -101,9 +102,9 @@ require('nvim-treesitter.configs').setup {
   auto_install = true,
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting=false,
+    additional_vim_regex_highlighting = false,
   },
-  ident = { enable = true }, 
+  ident = { enable = true },
   rainbow = {
     enable = true,
     extended_mode = true,
@@ -111,8 +112,11 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
+-- LUA SETUP
+require 'lspconfig'.lua_ls.setup {}
+
 -- RUST TOOLS SETUP
-require("rust-tools").setup ({
+require("rust-tools").setup({
   server = {
     on_attach = function(_, bufnr)
       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
@@ -121,7 +125,14 @@ require("rust-tools").setup ({
   }
 })
 
--- LSP Diagnostics Options Setup 
+-- LSP Diagnostics Options Setup
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.lsp.buf.format({ async = true })
+  end
+})
+
 local sign = function(opts)
   vim.fn.sign_define(opts.name, {
     texthl = opts.name,
@@ -130,23 +141,23 @@ local sign = function(opts)
   })
 end
 
-sign({name = 'DiagnosticSignError', text = ''})
-sign({name = 'DiagnosticSignWarn', text = ''})
-sign({name = 'DiagnosticSignHint', text = ''})
-sign({name = 'DiagnosticSignInfo', text = ''})
+sign({ name = 'DiagnosticSignError', text = '' })
+sign({ name = 'DiagnosticSignWarn', text = '' })
+sign({ name = 'DiagnosticSignHint', text = '' })
+sign({ name = 'DiagnosticSignInfo', text = '' })
 
 vim.diagnostic.config({
-    virtual_text = false,
-    signs = true,
-    update_in_insert = true,
-    underline = true,
-    severity_sort = false,
-    float = {
-        border = 'rounded',
-        source = 'always',
-        header = '',
-        prefix = '',
-    },
+  virtual_text = false,
+  signs = true,
+  update_in_insert = true,
+  underline = true,
+  severity_sort = false,
+  float = {
+    border = 'rounded',
+    source = 'always',
+    header = '',
+    prefix = '',
+  },
 })
 
 vim.cmd([[
@@ -155,12 +166,12 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
 
 -- AUTOCOMPLETE SETUP
-local cmp = require'cmp'
+local cmp = require 'cmp'
 cmp.setup({
   -- Enable LSP snippets
   snippet = {
     expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   mapping = {
@@ -180,29 +191,29 @@ cmp.setup({
   },
   -- Installed sources:
   sources = {
-    { name = 'path' },                              -- file paths
-    { name = 'nvim_lsp', keyword_length = 3 },      -- from language server
-    { name = 'nvim_lsp_signature_help'},            -- display function signatures with current parameter emphasized
-    { name = 'nvim_lua', keyword_length = 2},       -- complete neovim's Lua runtime API such vim.lsp.*
-    { name = 'buffer', keyword_length = 2 },        -- source current buffer
-    { name = 'vsnip', keyword_length = 2 },         -- nvim-cmp source for vim-vsnip 
-    { name = 'calc'},                               -- source for math calculation
+    { name = 'path' },                         -- file paths
+    { name = 'nvim_lsp',               keyword_length = 3 }, -- from language server
+    { name = 'nvim_lsp_signature_help' },      -- display function signatures with current parameter emphasized
+    { name = 'nvim_lua',               keyword_length = 2 }, -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'buffer',                 keyword_length = 2 }, -- source current buffer
+    { name = 'vsnip',                  keyword_length = 2 }, -- nvim-cmp source for vim-vsnip
+    { name = 'calc' },                         -- source for math calculation
   },
   window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   formatting = {
-      fields = {'menu', 'abbr', 'kind'},
-      format = function(entry, item)
-          local menu_icon ={
-              nvim_lsp = 'λ',
-              vsnip = '⋗',
-              buffer = 'Ω',
-              path = '🖫',
-          }
-          item.menu = menu_icon[entry.source.name]
-          return item
-      end,
+    fields = { 'menu', 'abbr', 'kind' },
+    format = function(entry, item)
+      local menu_icon = {
+        nvim_lsp = 'λ',
+        vsnip = '⋗',
+        buffer = 'Ω',
+        path = '🖫',
+      }
+      item.menu = menu_icon[entry.source.name]
+      return item
+    end,
   },
 })
