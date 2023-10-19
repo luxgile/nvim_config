@@ -16,15 +16,13 @@ vim.opt.relativenumber = true
 vim.opt.title = true
 vim.opt.autoindent = true
 vim.opt.encoding = 'utf-8'
+vim.opt.wrap = false
 
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
 -- GENERAL REMAPPINGS
-vim.keymap.set('n', '<Leader>ff', '<CMD>Telescope find_files<CR>')
-vim.keymap.set('n', '<Leader>b', '<CMD>Telescope buffers<CR>')
-vim.keymap.set('n', '<Leader>fg', '<CMD>Telescope live_grep<CR>')
 
 -- LAZY VIM BOOTSTRAP
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -87,7 +85,28 @@ require('lazy').setup({
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/vim-vsnip' },
+
+  -- Floating terminal
+  { 'voldikss/vim-floaterm' },
+
+  -- Comment toggle
+  { 'terrortylor/nvim-comment',           lazy = false },
 })
+
+-- TELESCOPE SETUP
+local tlcp = require('telescope.builtin')
+vim.keymap.set('n', '<Leader>ff', tlcp.find_files, {})
+vim.keymap.set('n', '<Leader>b', tlcp.buffers, {})
+vim.keymap.set('n', '<Leader>fg', tlcp.live_grep, {})
+vim.keymap.set('n', '<Leader>fd', tlcp.diagnostics, {})
+
+require("telescope").setup {
+  pickers = {
+    find_files = {
+      hidden = false
+    }
+  }
+}
 
 -- LUA LINE SETUP
 require('lualine').setup {
@@ -112,10 +131,52 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
+-- LSP SETUP
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
 -- LUA SETUP
 require 'lspconfig'.lua_ls.setup {}
 
 -- RUST TOOLS SETUP
+require 'lspconfig'.rust_analyzer.setup {
+  -- Server-specific settings. See `:help lspconfig-setup`
+  settings = {
+    ['rust-analyzer'] = {},
+  },
+}
+
 require("rust-tools").setup({
   server = {
     on_attach = function(_, bufnr)
@@ -126,7 +187,6 @@ require("rust-tools").setup({
 })
 
 -- LSP Diagnostics Options Setup
-
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     vim.lsp.buf.format({ async = true })
@@ -191,13 +251,13 @@ cmp.setup({
   },
   -- Installed sources:
   sources = {
-    { name = 'path' },                         -- file paths
-    { name = 'nvim_lsp',               keyword_length = 3 }, -- from language server
-    { name = 'nvim_lsp_signature_help' },      -- display function signatures with current parameter emphasized
-    { name = 'nvim_lua',               keyword_length = 2 }, -- complete neovim's Lua runtime API such vim.lsp.*
+    { name = 'path' },                                       -- file paths
+    { name = 'nvim_lsp',               keyword_length = 1 }, -- from language server
+    { name = 'nvim_lsp_signature_help' },                    -- display function signatures with current parameter emphasized
+    { name = 'nvim_lua',               keyword_length = 1 }, -- complete neovim's Lua runtime API such vim.lsp.*
     { name = 'buffer',                 keyword_length = 2 }, -- source current buffer
-    { name = 'vsnip',                  keyword_length = 2 }, -- nvim-cmp source for vim-vsnip
-    { name = 'calc' },                         -- source for math calculation
+    { name = 'vsnip',                  keyword_length = 1 }, -- nvim-cmp source for vim-vsnip
+    { name = 'calc' },                                       -- source for math calculation
   },
   window = {
     completion = cmp.config.window.bordered(),
@@ -217,3 +277,11 @@ cmp.setup({
     end,
   },
 })
+
+-- TERMINAL SETUP
+vim.keymap.set('n', "<leader>ft", ":FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish <CR> ")
+vim.keymap.set('n', "t", ":FloatermToggle myfloat<CR>")
+vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
+
+-- COMMENTING SETUP
+require("nvim_comment").setup()
