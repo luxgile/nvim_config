@@ -46,7 +46,9 @@ require('lazy').setup({
   { 'nvim-treesitter/nvim-treesitter',          build = ':TSUpdate' },
   { 'nvim-tree/nvim-web-devicons' },
   { 'simrat39/rust-tools.nvim' },
+  { 'nvim-tree/nvim-tree.lua' },
   { 'neovim/nvim-lspconfig' },
+  { 'ggandor/leap.nvim' },
   { 'nvim-lualine/lualine.nvim' },
   {
     "williamboman/mason.nvim",
@@ -63,14 +65,12 @@ require('lazy').setup({
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
   },
+
+  -- Color Scheme
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    config = function(plugin)
-      vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-      vim.cmd([[colorscheme tokyonight]])
-    end
   },
   -- Completion framework:
   { 'hrsh7th/nvim-cmp' },
@@ -93,6 +93,50 @@ require('lazy').setup({
   { 'terrortylor/nvim-comment',           lazy = false },
 })
 
+-- MOTION SETUP
+require('leap').add_default_mappings()
+
+-- COLOR SCHEME SETUP
+require('tokyonight').setup {
+  transparent = true,
+  styles = {
+    sidebars = "transparent",
+    floats = "transparent",
+  },
+  on_highlights = function(hl, c)
+    local prompt = "#2d3149"
+    hl.TelescopeNormal = {
+      bg = c.bg_dark,
+      fg = c.fg_dark,
+    }
+    hl.TelescopeBorder = {
+      bg = c.bg_dark,
+      fg = c.bg_dark,
+    }
+    hl.TelescopePromptNormal = {
+      bg = prompt,
+    }
+    hl.TelescopePromptBorder = {
+      bg = prompt,
+      fg = prompt,
+    }
+    hl.TelescopePromptTitle = {
+      bg = prompt,
+      fg = prompt,
+    }
+    hl.TelescopePreviewTitle = {
+      bg = c.bg_dark,
+      fg = c.bg_dark,
+    }
+    hl.TelescopeResultsTitle = {
+      bg = c.bg_dark,
+      fg = c.bg_dark,
+    }
+  end
+}
+-- vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
+vim.cmd([[colorscheme tokyonight]])
+
 -- TELESCOPE SETUP
 local tlcp = require('telescope.builtin')
 vim.keymap.set('n', '<Leader>ff', tlcp.find_files, {})
@@ -114,6 +158,43 @@ require('lualine').setup {
     theme = 'tokyonight'
   }
 }
+
+-- FILE EXPLORER SETUP
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
+local HEIGHT_RATIO = 0.8
+local WIDTH_RATIO = 0.5
+require("nvim-tree").setup({
+  view = {
+    float = {
+      enable = true,
+      open_win_config = function()
+        local screen_w = vim.opt.columns:get()
+        local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+        local window_w = screen_w * WIDTH_RATIO
+        local window_h = screen_h * HEIGHT_RATIO
+        local window_w_int = math.floor(window_w)
+        local window_h_int = math.floor(window_h)
+        local center_x = (screen_w - window_w) / 2
+        local center_y = ((vim.opt.lines:get() - window_h) / 2)
+            - vim.opt.cmdheight:get()
+        return {
+          border = 'rounded',
+          relative = 'editor',
+          row = center_y,
+          col = center_x,
+          width = window_w_int,
+          height = window_h_int,
+        }
+      end,
+    },
+    width = function()
+      return math.floor(vim.opt.columns:get() * WIDTH_RATIO)
+    end,
+  },
+})
+vim.keymap.set('n', '<Leader>t', ":NvimTreeToggle<cr>", { silent = true, noremap = true })
 
 -- TREESITTER SETUP
 require('nvim-treesitter.configs').setup {
@@ -279,9 +360,9 @@ cmp.setup({
 })
 
 -- TERMINAL SETUP
-vim.keymap.set('n', "<leader>ft", ":FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish <CR> ")
-vim.keymap.set('n', "t", ":FloatermToggle myfloat<CR>")
-vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
+-- vim.keymap.set('n', "<leader>ft", ":FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish <CR> ")
+-- vim.keymap.set('n', "t", ":FloatermToggle myfloat<CR>")
+-- vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
 
 -- COMMENTING SETUP
 require("nvim_comment").setup()
