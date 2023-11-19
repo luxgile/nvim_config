@@ -22,6 +22,8 @@
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "6c921ca12321edaa773e324ef64ea301a1d0da62" },
   "telescope.nvim": { "branch": "master", "commit": "7011eaae0ac1afe036e30c95cf80200b8dc3f21a" },
   "tokyonight.nvim": { "branch": "main", "commit": "633039585dff7fd2b9b62fb190bf768702609d95" },
+  "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
   "vim-floaterm": { "branch": "master", "commit": "6e81602e9d7ff7dc1c96c66fedc38fca1262d57c" },
+  "vim-godot": { "branch": "master", "commit": "d748a46be5195256f6b2c767ef32de87b05ae8f7" },
   "vim-vsnip": { "branch": "master", "commit": "be277461265f1e5c7db470aa479f30956597ea9e" }
 }

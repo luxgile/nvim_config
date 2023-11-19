@@ -66,6 +66,17 @@ require('lazy').setup({
     opts = {} -- this is equalent to setup({}) function
   },
 
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+    },
+  },
+
+  {
+    "habamax/vim-godot",
+  },
+
   -- Color Scheme
   {
     "folke/tokyonight.nvim",
@@ -152,6 +163,15 @@ require("telescope").setup {
   }
 }
 
+-- TROUBLE DIAGNOSTICS
+local trb = require("trouble")
+vim.keymap.set("n", "<leader>xx", function() trb.toggle() end)
+vim.keymap.set("n", "<leader>xw", function() trb.toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() trb.toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() trb.toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() trb.toggle("loclist") end)
+vim.keymap.set("n", "gr", function() trb.toggle("lsp_references") end)
+
 -- LUA LINE SETUP
 require('lualine').setup {
   options = {
@@ -198,7 +218,7 @@ vim.keymap.set('n', '<Leader>t', ":NvimTreeToggle<cr>", { silent = true, noremap
 
 -- TREESITTER SETUP
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "lua", "rust", "toml" },
+  ensure_installed = { "lua", "rust", "toml", "wgsl" },
   auto_install = true,
   highlight = {
     enable = true,
@@ -240,18 +260,62 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts) Removed as we are using Trouble for this.
     vim.keymap.set('n', '<space>f', function()
       vim.lsp.buf.format { async = true }
     end, opts)
   end,
 })
 
+local lspconfig = require 'lspconfig'
+
+-- GODOT SETUP
+require 'lspconfig'.gdscript.setup {
+  cmd = { 'ncat', "127.0.0.1", "6005" },
+}
+
+
+-- WGSL SETUP
+vim.cmd("au BufNewFile,BufRead *.wgsl set filetype=wgsl")
+vim.filetype.add({
+  extenstion = {
+    wgsl = "wgsl",
+  }
+})
+lspconfig.wgsl_analyzer.setup {}
+
 -- LUA SETUP
-require 'lspconfig'.lua_ls.setup {}
+lspconfig.lua_ls.setup {}
 
 -- RUST TOOLS SETUP
-require 'lspconfig'.rust_analyzer.setup {
+-- Workaround to external files being added to workspace
+local function ensure_uri_scheme(uri)
+  if not vim.startswith(uri, "file://") then
+    return "file://" .. uri
+  end
+  return uri
+end
+
+local function is_in_workspace(uri)
+  uri = ensure_uri_scheme(uri)
+  local path = vim.uri_to_fname(uri)
+  local workspace_dir = vim.fn.getcwd()
+
+  return vim.startswith(path, workspace_dir)
+end
+
+local function filter_diagnostics(diagnostics)
+  local filtered_diagnostics = {}
+  for _, diagnostic in ipairs(diagnostics) do
+    if is_in_workspace(diagnostic.source) then
+      table.insert(filtered_diagnostics, diagnostic)
+    end
+  end
+  return filtered_diagnostics
+end
+
+lspconfig.rust_analyzer.setup {
+  root_dir = require "lspconfig/util".root_pattern("Cargo.toml"),
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {},
@@ -264,6 +328,14 @@ require("rust-tools").setup({
       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
     end,
+    -- root_dir = function(startpath)
+    --   local startpath_uri = vim.uri_from_fname(startpath)
+    --   if not is_in_workspace(startpath) then
+    --     return nil
+    --   end
+    --
+    --   return lspconfig.util.root_pattern("Cargo.toml", "rust-project.json")(startpath)
+    -- end,
   }
 })
 
