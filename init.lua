@@ -65,6 +65,9 @@ require('lazy').setup({
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
   },
+  -- Dap
+  { "mfussenegger/nvim-dap" },
+  { "rcarriga/nvim-dap-ui" },
 
   {
     "folke/trouble.nvim",
@@ -171,6 +174,39 @@ vim.keymap.set("n", "<leader>xd", function() trb.toggle("document_diagnostics") 
 vim.keymap.set("n", "<leader>xq", function() trb.toggle("quickfix") end)
 vim.keymap.set("n", "<leader>xl", function() trb.toggle("loclist") end)
 vim.keymap.set("n", "gr", function() trb.toggle("lsp_references") end)
+
+-- DAP SETUP
+local dap = require('dap')
+vim.keymap.set('n', '<Leader>dc', function() dap.continue() end)
+vim.keymap.set('n', '<Leader>dp', function() dap.step_over() end)
+vim.keymap.set('n', '<Leader>di', function() dap.step_into() end)
+vim.keymap.set('n', '<Leader>do', function() dap.step_out() end)
+vim.keymap.set('n', '<Leader>db', function() dap.toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
+vim.keymap.set('n', '<Leader>df', function() require("dapui").float_element('scopes', { enter = true }) end)
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    -- Change this to your path!
+    command = 'codelldb',
+    args = { "--port", "${port}" },
+  }
+}
+
+dap.configurations.rust = {
+  {
+    name = "Launch file",
+    type = "codelldb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+  },
+}
+require("dapui").setup({})
 
 -- LUA LINE SETUP
 require('lualine').setup {
