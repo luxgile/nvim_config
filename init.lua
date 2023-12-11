@@ -323,6 +323,18 @@ lspconfig.wgsl_analyzer.setup {}
 -- LUA SETUP
 lspconfig.lua_ls.setup {}
 
+-- JS & TS SETUP
+lspconfig.eslint.setup({
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+})
+lspconfig.tsserver.setup {}
+lspconfig.html.setup {}
+
 -- RUST TOOLS SETUP
 -- Workaround to external files being added to workspace
 local function ensure_uri_scheme(uri)
@@ -474,3 +486,4 @@ cmp.setup({
 
 -- COMMENTING SETUP
 require("nvim_comment").setup()
+
