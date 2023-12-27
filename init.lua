@@ -76,6 +76,10 @@ require('lazy').setup({
     },
   },
 
+  -- Indents
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
+
+  -- Godot
   {
     "habamax/vim-godot",
   },
@@ -84,6 +88,11 @@ require('lazy').setup({
   {
     "folke/tokyonight.nvim",
     lazy = false,
+    priority = 1000,
+  },
+  {
+    "morhetz/gruvbox",
+    laze = false,
     priority = 1000,
   },
   -- Completion framework:
@@ -149,7 +158,7 @@ require('tokyonight').setup {
   end
 }
 -- vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme gruvbox]])
 
 -- TELESCOPE SETUP
 local tlcp = require('telescope.builtin')
@@ -211,9 +220,12 @@ require("dapui").setup({})
 -- LUA LINE SETUP
 require('lualine').setup {
   options = {
-    theme = 'tokyonight'
+    theme = 'gruvbox'
   }
 }
+
+-- INDENT
+require("ibl").setup()
 
 -- FILE EXPLORER SETUP
 vim.g.loaded_netrw = 1
