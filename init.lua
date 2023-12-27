@@ -225,7 +225,9 @@ require('lualine').setup {
 }
 
 -- INDENT
-require("ibl").setup()
+require("ibl").setup({
+  scope = { enabled = false },
+})
 
 -- FILE EXPLORER SETUP
 vim.g.loaded_netrw = 1
