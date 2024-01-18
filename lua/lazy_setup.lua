@@ -15,4 +15,8 @@ function M.lazy_bootstrap()
   vim.opt.rtp:prepend(lazypath)
 end
 
+function M.setup(plugins)
+require('lazy').setup(plugins)
+end
+
 return M
