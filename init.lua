@@ -11,6 +11,4 @@ setup("color_scheme")
 setup("misc")
 
 lazy_setup.setup(plugins)
-table.foreach(setups, function(k, v) v() end)
-
--- LAZY VIM SETUP
+table.foreach(setups, function(k, v) pcall(v) end)

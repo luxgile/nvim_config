@@ -1,13 +1,3 @@
-vim.api.nvim_create_user_command('LOpenConfig',
-  function()
-    vim.cmd(":cd ~/AppData/Local/nvim")
-    vim.cmd(":e init.lua")
-  end,
-  {})
-
-
-vim.keymap.set('n', '<F10>', ':e ~/AppData/Local/nvim/init.lua<CR>')
-
 vim.g.mapleader = ' '
 vim.opt.timeoutlen = 3000
 vim.opt.ttimeoutlen = 100
@@ -28,3 +18,5 @@ vim.opt.wrap = false
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
+
+vim.keymap.set('n', '<leader>fp', ':e ~/AppData/Local/nvim/<CR>')
