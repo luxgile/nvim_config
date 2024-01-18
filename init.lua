@@ -42,6 +42,10 @@ require('lazy').setup({
     },
   },
 
+  -- Indents
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
+
+  -- Godot
   {
     "habamax/vim-godot",
   },
@@ -50,6 +54,11 @@ require('lazy').setup({
   {
     "folke/tokyonight.nvim",
     lazy = false,
+    priority = 1000,
+  },
+  {
+    "morhetz/gruvbox",
+    laze = false,
     priority = 1000,
   },
   -- Completion framework:
@@ -115,7 +124,7 @@ require('tokyonight').setup {
   end
 }
 -- vim.opt.rtp:append(plugin.dir .. "/packages/neovim")
-vim.cmd([[colorscheme tokyonight]])
+vim.cmd([[colorscheme gruvbox]])
 
 -- TELESCOPE SETUP
 local tlcp = require('telescope.builtin')
@@ -177,9 +186,14 @@ require("dapui").setup({})
 -- LUA LINE SETUP
 require('lualine').setup {
   options = {
-    theme = 'tokyonight'
+    theme = 'gruvbox'
   }
 }
+
+-- INDENT
+require("ibl").setup({
+  scope = { enabled = false },
+})
 
 -- FILE EXPLORER SETUP
 vim.g.loaded_netrw = 1
@@ -288,6 +302,18 @@ lspconfig.wgsl_analyzer.setup {}
 
 -- LUA SETUP
 lspconfig.lua_ls.setup {}
+
+-- JS & TS SETUP
+lspconfig.eslint.setup({
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+})
+lspconfig.tsserver.setup {}
+lspconfig.html.setup {}
 
 -- RUST TOOLS SETUP
 -- Workaround to external files being added to workspace
@@ -440,3 +466,4 @@ cmp.setup({
 
 -- COMMENTING SETUP
 require("nvim_comment").setup()
+
