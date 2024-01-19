@@ -8,6 +8,7 @@ local setups = {}
 local setup = function(plugin) require(plugin).setup(plugins, setups) end
 
 setup("color_scheme")
+setup("file_browser")
 setup("misc")
 
 lazy_setup.setup(plugins)
