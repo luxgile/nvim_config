@@ -1,5 +1,16 @@
 local M = {}
 local p = {
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {
+    }
+  },
+  { "ahmedkhalf/project.nvim" },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
   { 'nvim-tree/nvim-web-devicons' },
@@ -51,6 +62,31 @@ local p = {
 
 
 function init()
+  local wk = require("which-key")
+  -- Window management
+  wk.register({
+    w = {
+      name = "Window",
+      q = { "<cmd>q<cr>", "Close" },
+      h = { "<cmd>wincmd h<cr>", "Focus left" },
+      j = { "<cmd>wincmd j<cr>", "Focus down" },
+      k = { "<cmd>wincmd k<cr>", "Focus up" },
+      l = { "<cmd>wincmd l<cr>", "Focus right" },
+      v = { "<cmd>vs<cr>", "Vertical split" },
+      s = { "<cmd>ws<cr>", "Horizontal split" },
+    }
+  }, { prefix = "<leader>" })
+
+  -- PROJECT BROWSER
+  require("project_nvim").setup {}
+  require('telescope').load_extension('projects')
+  wk.register({
+    p = {
+      name = "Project",
+      p = { "<cmd>Telescope projects<cr>", "Browse projects" },
+    }
+  }, { prefix = "<leader>" })
+
   -- TROUBLE DIAGNOSTICS
   local trb = require("trouble")
   vim.keymap.set("n", "<leader>xx", function() trb.toggle() end)
@@ -126,11 +162,11 @@ function init()
   local lspconfig = require 'lspconfig'
 
   -- GODOT SETUP
-  require 'lspconfig'.gdscript.setup {
+  lspconfig.gdscript.setup {
     cmd = { 'ncat', "127.0.0.1", "6005" },
   }
 
-
+  lspconfig.clangd.setup {}
 
   -- LUA SETUP
   lspconfig.lua_ls.setup {}
@@ -213,13 +249,13 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
     },
     -- Installed sources:
     sources = {
-      { name = 'path' },                                     -- file paths
+      { name = 'path' },                                       -- file paths
       { name = 'nvim_lsp',               keyword_length = 1 }, -- from language server
-      { name = 'nvim_lsp_signature_help' },                  -- display function signatures with current parameter emphasized
+      { name = 'nvim_lsp_signature_help' },                    -- display function signatures with current parameter emphasized
       { name = 'nvim_lua',               keyword_length = 1 }, -- complete neovim's Lua runtime API such vim.lsp.*
       { name = 'buffer',                 keyword_length = 2 }, -- source current buffer
       { name = 'vsnip',                  keyword_length = 1 }, -- nvim-cmp source for vim-vsnip
-      { name = 'calc' },                                     -- source for math calculation
+      { name = 'calc' },                                       -- source for math calculation
     },
     window = {
       completion = cmp.config.window.bordered(),

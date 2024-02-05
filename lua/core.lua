@@ -1,6 +1,4 @@
 vim.g.mapleader = ' '
-vim.opt.timeoutlen = 3000
-vim.opt.ttimeoutlen = 100
 
 vim.opt.background = "dark"
 vim.opt.clipboard = 'unnamedplus'
@@ -21,11 +19,3 @@ vim.opt.tabstop = 2
 
 vim.keymap.set('n', '<leader>fp', ':e ~/AppData/Local/nvim/<CR>')
 
--- Window management
-vim.keymap.set('n', '<leader>wq', ":q<CR>")
-vim.keymap.set('n', '<leader>ww', ":wincmd w<CR>")
-vim.keymap.set('n', '<leader>wh', ":wincmd h<CR>")
-vim.keymap.set('n', '<leader>wj', ":wincmd j<CR>")
-vim.keymap.set('n', '<leader>wk', ":wincmd k<CR>")
-vim.keymap.set('n', '<leader>wv', ":vs<CR>")
-vim.keymap.set('n', '<leader>ws', ":sp<CR>")

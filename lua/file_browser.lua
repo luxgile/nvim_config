@@ -7,12 +7,22 @@ local p = {
 }
 
 function init()
+  local wk = require("which-key")
+
   -- TELESCOPE SETUP
   local tlcp = require('telescope.builtin')
-  vim.keymap.set('n', '<Leader>ff', tlcp.find_files, {})
-  vim.keymap.set('n', '<Leader>bb', tlcp.buffers, {})
-  vim.keymap.set('n', '<Leader>fg', tlcp.live_grep, {})
-  -- vim.keymap.set('n', '<Leader>fd', tlcp.diagnostics, {})
+  wk.register({
+    f = {
+      name = "File",
+      f = { tlcp.find_files, "Find in current" },
+      t = { "<cmd>NvimTreeToggle<cr>", "Filetree" },
+      g = { tlcp.live_grep, "Grep" },
+    },
+    b = {
+      name = "Buffer",
+      b = { tlcp.buffers, "Browse" },
+    },
+  }, { prefix = "<leader>" })
 
   require("telescope").setup {
     pickers = {
@@ -57,7 +67,6 @@ function init()
       end,
     },
   })
-  vim.keymap.set('n', '<Leader>ft', ":NvimTreeToggle<cr>", { silent = true, noremap = true })
 end
 
 function M.setup(plugins, setups)
