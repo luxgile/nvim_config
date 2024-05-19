@@ -58,6 +58,8 @@ local p = {
 
   -- Comment toggle
   { 'terrortylor/nvim-comment',            lazy = false },
+
+  { "https://github.com/ggandor/leap.nvim" },
 }
 
 
@@ -283,6 +285,9 @@ autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 
   -- COMMENTING SETUP
   require("nvim_comment").setup()
+
+  -- LEAP NAVIGATION
+  require('leap').create_default_mappings()
 end
 
 function M.setup(plugins, setups)
