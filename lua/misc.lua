@@ -165,6 +165,11 @@ function init()
   lspconfig.gdscript.setup {
     cmd = { 'ncat', "127.0.0.1", "6005" },
   }
+  dap.adapters.godot = {
+    type = 'server',
+    host = '127.0.0.1',
+    port = 6006,
+  }
 
   lspconfig.clangd.setup {}
 
