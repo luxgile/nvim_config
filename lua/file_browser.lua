@@ -3,6 +3,7 @@ local M = {}
 local p = {
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   { 'nvim-telescope/telescope.nvim',            tag = '0.1.4' },
+  { 'stevearc/oil.nvim', },
   { 'nvim-tree/nvim-tree.lua' },
 }
 
@@ -31,6 +32,9 @@ function init()
       }
     }
   }
+
+  -- OIL
+  require('oil').setup()
 
   -- FILE EXPLORER SETUP
   vim.g.loaded_netrw = 1

@@ -16,6 +16,7 @@ end
 
 setup("color_scheme")
 setup("file_browser")
+setup("git")
 setup("lsp")
 setup("rust")
 setup("csharp")
