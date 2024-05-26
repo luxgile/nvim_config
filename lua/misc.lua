@@ -21,11 +21,13 @@ local p = {
     opts = {} -- this is equalent to setup({}) function
   },
   -- Dap
+  { "nvim-neotest/nvim-nio" },
   { "mfussenegger/nvim-dap" },
   { "rcarriga/nvim-dap-ui" },
 
   {
     "folke/trouble.nvim",
+    branch = "dev",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
     },
@@ -146,7 +148,7 @@ function init()
 
   -- TREESITTER SETUP
   require('nvim-treesitter.configs').setup {
-    ensure_installed = { "lua", "rust", "toml", "wgsl" },
+    ensure_installed = { "lua", "c_sharp", "rust", "toml", "wgsl" },
     auto_install = true,
     highlight = {
       enable = true,
