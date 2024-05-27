@@ -16,7 +16,8 @@ function init()
     f = {
       name = "File",
       f = { tlcp.find_files, "Find in current" },
-      t = { "<cmd>NvimTreeToggle<cr>", "Filetree" },
+      -- t = { "<cmd>NvimTreeToggle<cr>", "File tree" },
+      t = { "<cmd>Oil --float<cr>", "File tree" },
       g = { tlcp.live_grep, "Grep" },
     },
     b = {
