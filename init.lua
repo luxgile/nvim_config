@@ -20,6 +20,7 @@ setup("git")
 setup("lsp")
 setup("rust")
 setup("csharp")
+setup("codeium")
 setup("misc")
 
 lazy_setup.setup(plugins)
