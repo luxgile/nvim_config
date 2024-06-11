@@ -13,6 +13,9 @@ function init()
   require("roslyn").setup({
     dotnet_cmd = "dotnet",              -- this is the default
     roslyn_version = "4.8.0-3.23475.7", -- this is the default
+    on_attach = function(client, bufnr)
+
+    end,
   })
   -- Found here: https://gist.github.com/squk/055683bb83d4dbbac418582129f0e3b5
   -- require 'lspconfig'.omnisharp.setup {
