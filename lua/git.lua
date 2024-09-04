@@ -21,12 +21,10 @@ function init()
   neogit.setup {}
 
   local wk = require("which-key")
-  wk.register({
-    g = {
-      name = "Git",
-      g = { "<cmd>Neogit cwd=%:p:h<CR>", "Open Neogit" },
-    }
-  }, { prefix = "<leader>" })
+  wk.add({
+    { "<leader>g",  group = "Git" },
+    { "<leader>gg", "<cmd>Neogit<CR>", desc = "Open Neogit" }
+  })
 end
 
 function M.setup(plugins, setups)

@@ -27,7 +27,6 @@ local p = {
 
   {
     "folke/trouble.nvim",
-    branch = "dev",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
     },
@@ -68,28 +67,25 @@ local p = {
 function init()
   local wk = require("which-key")
   -- Window management
-  wk.register({
-    w = {
-      name = "Window",
-      q = { "<cmd>q<cr>", "Close" },
-      h = { "<cmd>wincmd h<cr>", "Focus left" },
-      j = { "<cmd>wincmd j<cr>", "Focus down" },
-      k = { "<cmd>wincmd k<cr>", "Focus up" },
-      l = { "<cmd>wincmd l<cr>", "Focus right" },
-      v = { "<cmd>vs<cr>", "Vertical split" },
-      s = { "<cmd>ws<cr>", "Horizontal split" },
-    }
-  }, { prefix = "<leader>" })
+  wk.add({
+    mode = { "n" },
+    { "<leader>w",  group = "Window" },
+    { "<leader>wq", "<cmd>q<cr>",        desc = "Close" },
+    { "<leader>wh", "<cmd>wincmd h<cr>", desc = "Focus left" },
+    { "<leader>wj", "<cmd>wincmd j<cr>", desc = "Focus down" },
+    { "<leader>wk", "<cmd>wincmd k<cr>", desc = "Focus up" },
+    { "<leader>wl", "<cmd>wincmd l<cr>", desc = "Focus right" },
+    { "<leader>wv", "<cmd>vs<cr>",       desc = "Vertical split" },
+    { "<leader>ws", "<cmd>ws<cr>",       desc = "Horizontal split" },
+  })
 
   -- PROJECT BROWSER
   require("project_nvim").setup {}
   require('telescope').load_extension('projects')
-  wk.register({
-    p = {
-      name = "Project",
-      p = { "<cmd>Telescope projects<cr>", "Browse projects" },
-    }
-  }, { prefix = "<leader>" })
+  wk.add({
+    { "<leader>p",  group = "Project" },
+    { "<leader>pp", "<cmd>Telescope projects<cr>", desc = "Browse projects" }
+  })
 
   -- TROUBLE DIAGNOSTICS
   local trb = require("trouble")

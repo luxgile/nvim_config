@@ -12,19 +12,14 @@ function init()
 
   -- TELESCOPE SETUP
   local tlcp = require('telescope.builtin')
-  wk.register({
-    f = {
-      name = "File",
-      f = { tlcp.find_files, "Find in current" },
-      -- t = { "<cmd>NvimTreeToggle<cr>", "File tree" },
-      t = { "<cmd>Oil --float<cr>", "File tree" },
-      g = { tlcp.live_grep, "Grep" },
-    },
-    b = {
-      name = "Buffer",
-      b = { tlcp.buffers, "Browse" },
-    },
-  }, { prefix = "<leader>" })
+  wk.add({
+    { "<leader>f",  group = "File" },
+    { "<leader>ff", tlcp.find_files,        desc = "Find in current" },
+    { "<leader>ft", "<cmd>Oil --float<cr>", desc = "File tree" },
+    { "<leader>fg", tlcp.live_grep,         desc = "Grep" },
+    { "<leader>b",  group = "Buffer" },
+    { "<leader>bb", tlcp.buffers,           desc = "Browse" },
+  })
 
   require("telescope").setup {
     pickers = {
