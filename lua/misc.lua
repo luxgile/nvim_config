@@ -89,12 +89,10 @@ function init()
 
   -- TROUBLE DIAGNOSTICS
   local trb = require("trouble")
-  vim.keymap.set("n", "<leader>xx", function() trb.toggle() end)
-  vim.keymap.set("n", "<leader>xw", function() trb.toggle("workspace_diagnostics") end)
-  vim.keymap.set("n", "<leader>xd", function() trb.toggle("document_diagnostics") end)
-  vim.keymap.set("n", "<leader>xq", function() trb.toggle("quickfix") end)
-  vim.keymap.set("n", "<leader>xl", function() trb.toggle("loclist") end)
-  vim.keymap.set("n", "gr", function() trb.toggle("lsp_references") end)
+  wk.add({
+    { "<leader>x",  group = "Trouble" },
+    { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Toggle trouble" },
+  })
 
   -- DAP SETUP
   local dap = require('dap')
