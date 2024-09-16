@@ -6,9 +6,9 @@ add('echasnovski/mini.pick')
 require('mini.pick').setup()
 vim.ui.select = MiniPick.ui_select
 
--- Oil file browser
--- add( 'stevearc/oil.nvim' )
--- require("oil").setup()
+-- Recent files
+add('echasnovski/mini.visits')
+require('mini.visits').setup() 
 
 -- Mini file browser 
 add('echasnovski/mini.files')
