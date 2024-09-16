@@ -1,4 +1,4 @@
-require("lua.mini_deps")
+require("mini_deps")
 
 require("core")
 require("misc")
