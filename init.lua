@@ -9,4 +9,3 @@ require("sessions")
 require("git")
 
 require("lsp")
-require("rust")

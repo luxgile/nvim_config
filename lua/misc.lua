@@ -11,3 +11,7 @@ require("which-key").setup()
 -- Auto pairs
 add('echasnovski/mini.pairs')
 require('mini.pairs').setup()
+
+-- Notifications
+add('echasnovski/mini.notify')
+require('mini.notify').setup()
