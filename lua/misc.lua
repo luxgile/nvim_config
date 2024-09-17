@@ -15,3 +15,7 @@ require('mini.pairs').setup()
 -- Notifications
 add('echasnovski/mini.notify')
 require('mini.notify').setup()
+
+-- 2D Navigation
+add('echasnovski/mini.jump2d')
+require('mini.jump2d').setup()
