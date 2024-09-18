@@ -19,10 +19,14 @@ end)
 -- Theme
 add('echasnovski/mini.colors')
 now(function() require('mini.colors').setup() end)
-add('echasnovski/mini.hues')
+-- add('echasnovski/mini.hues')
 -- now(function() require('mini.hues').setup() end)
 vim.cmd([[colorscheme randomhue]])
 
 -- Statusline
 add('echasnovski/mini.statusline')
 now(function() require('mini.statusline').setup() end)
+
+-- Treesitter
+add('nvim-treesitter/nvim-treesitter')
+require('nvim-treesitter.configs').setup({})
