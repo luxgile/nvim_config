@@ -2,8 +2,8 @@ vim.g.mapleader = ' '
 
 vim.opt.background = "dark"
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.completeopt = { 'noinsert', 'menuone', 'noselect' }
-vim.opt.shortmess = vim.opt.shortmess + { c = true }
+-- vim.opt.completeopt = { 'noinsert', 'menuone', 'noselect' } Disabled because of Mini Completion
+-- vim.opt.shortmess = vim.opt.shortmess + { c = true }
 vim.api.nvim_set_option('updatetime', 300)
 vim.opt.number = true
 vim.opt.hidden = true
