@@ -40,6 +40,25 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+-- DAP
+add('mfussenegger/nvim-dap')
+add('rcarriga/nvim-dap-ui')
+add('nvim-neotest/nvim-nio')
+local dapui = require("dapui")
+dapui.setup()
+local dap = require('dap')
+wk.add({
+  { "<leader>d", group = "Debug" },
+  { "<leader>dc", function() dap.continue() end, desc = "Continue" },
+  { "<leader>dp", function() dap.step_over() end, desc = "Step over" },
+  { "<leader>di", function() dap.step_into() end, desc = "Step into" },
+  { "<leader>do", function() dap.step_out() end, desc = "Step out" },
+  { "<leader>db", function() dap.toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { "<leader>dl", function() dap.run_last() end, desc = "Run last" },
+  { "<leader>df", function() dapui.float_element('scopes', { enter = true }) end, desc = "UI?" },
+})
+
+
 -- Lua
 lspconfig.lua_ls.setup {}
 
@@ -48,12 +67,12 @@ add('mrcjkb/rustaceanvim')
 -- Workaround to snippets completion not supported by mini.completion
 vim.g.rustaceanvim = {
   server = {
-    default_settings = {
-      ['rust-analyzer'] = {
+    capabilities = {
+      textDocument = {
         completion = {
-          callable = {
-            snippets = "none"
-          }
+          completionItem = {
+            snippetSupport = false,
+          },
         }
       },
     },
