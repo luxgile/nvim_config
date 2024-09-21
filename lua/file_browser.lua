@@ -23,6 +23,8 @@ wk.add({
   { "<leader>f", group = "Files" },
   { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>", desc = "File tree" },
   { "<leader>ff", "<cmd>Pick files<cr>", desc = "Find file" },
+  { "<leader>fg", "<cmd>Pick grep_live<cr>", desc = "Fuzzy find" },
   { "<leader>b", group = "Buffers" },
   { "<leader>bb", "<cmd>Pick buffers<cr>", desc = "Select buffer" },
 })
+
