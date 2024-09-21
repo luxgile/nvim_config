@@ -55,7 +55,7 @@ wk.add({
   { "<leader>do", function() dap.step_out() end,                                  desc = "Step out" },
   { "<leader>db", function() dap.toggle_breakpoint() end,                         desc = "Toggle breakpoint" },
   { "<leader>dl", function() dap.run_last() end,                                  desc = "Run last" },
-  { "<leader>df", function() dapui.float_element('scopes', { enter = true }) end, desc = "UI?" },
+  { "<leader>du", function() dapui.toggle() end, desc = "UI?" },
 })
 
 
