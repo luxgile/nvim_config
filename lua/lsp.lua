@@ -21,6 +21,19 @@ require('mini.completion').setup({
   set_vim_settings = true,
 })
 
+-- Snippets
+add('echasnovski/mini.snippets')
+local gen_loader = require('mini.snippets').gen_loader
+require('mini.snippets').setup({
+  snippets = {
+    gen_loader.from_lang(),
+  },
+})
+
+-- Surround
+add('echasnovski/mini.surround')
+require('mini.surround').setup()
+
 -- General keybinds
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -109,3 +122,25 @@ vim.filetype.add({
   }
 })
 lspconfig.wgsl_analyzer.setup {}
+
+
+-- ZIG
+add('ziglang/zig.vim')
+lspconfig.zls.setup{}
+-- dap.adapters.lldb = {
+--   type = 'executable',
+--   command = 'C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe', -- adjust as needed, must be absolute path
+--   name = 'lldb'
+-- }
+
+dap.configurations.zig = {
+  {
+    name = 'Launch',
+    type = 'codelldb',
+    request = 'launch',
+    program = '${workspaceFolder}/zig-out/bin/zig_hello_world.exe',
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+  },
+}

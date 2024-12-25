@@ -20,7 +20,7 @@ add('echasnovski/mini.colors')
 now(function() require('mini.colors').setup() end)
 -- add('echasnovski/mini.hues')
 -- now(function() require('mini.hues').setup() end)
-vim.cmd([[colorscheme randomhue]])
+vim.cmd([[colorscheme minicyan]])
 
 -- Statusline
 add('echasnovski/mini.statusline')
