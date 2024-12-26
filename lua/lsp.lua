@@ -34,6 +34,11 @@ require('mini.snippets').setup({
 add('echasnovski/mini.surround')
 require('mini.surround').setup()
 
+
+-- Picker
+add('echasnovski/mini.extra')
+require('mini.extra').setup()
+
 -- General keybinds
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -41,14 +46,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- MiniCompletion.completefunc_lsp()
     local opts = { buffer = ev.buf }
     wk.add({
-      { "gD",         function() vim.lsp.buf.declaration(opts) end,    desc = "Go to declaration" },
-      { "gd",         function() vim.lsp.buf.definition(opts) end,     desc = "Go to definition" },
-      { "gi",         function() vim.lsp.buf.implementation(opts) end, desc = "Go to implementation" },
-      { "gr",         function() vim.lsp.buf.references(opts) end,     desc = "Go to references" },
+      { "gD",         function() MiniExtra.pickers.lsp({ scope = "declaration" }) end,    desc = "Go to declaration" },
+      { "gd",         function() MiniExtra.pickers.lsp({ scope = "definition" }) end,     desc = "Go to definition" },
+      { "gi",         function() MiniExtra.pickers.lsp({ scope = "implementation" }) end, desc = "Go to implementation" },
+      { "gr",         function() MiniExtra.pickers.lsp({ scope = "references" }) end,     desc = "Go to references" },
       { "<leader>rn", function() vim.lsp.buf.rename() end,             desc = "Rename" },
       { "K",          function() vim.lsp.buf.hover(opts) end,          desc = "Hover" },
       { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,    desc = "Code action" },
       { "<leader>cf", function() vim.lsp.buf.format(opts) end,         desc = "Code format" },
+      { "<leader>cq", function() MiniExtra.pickers.diagnostic() end,   desc = "Open diagnostics" },
     })
   end
 })
@@ -62,13 +68,13 @@ dapui.setup()
 local dap = require('dap')
 wk.add({
   { "<leader>d",  group = "Debug" },
-  { "<leader>dc", function() dap.continue() end,                                  desc = "Continue" },
-  { "<leader>dp", function() dap.step_over() end,                                 desc = "Step over" },
-  { "<leader>di", function() dap.step_into() end,                                 desc = "Step into" },
-  { "<leader>do", function() dap.step_out() end,                                  desc = "Step out" },
-  { "<leader>db", function() dap.toggle_breakpoint() end,                         desc = "Toggle breakpoint" },
-  { "<leader>dl", function() dap.run_last() end,                                  desc = "Run last" },
-  { "<leader>du", function() dapui.toggle() end, desc = "UI?" },
+  { "<leader>dc", function() dap.continue() end,          desc = "Continue" },
+  { "<leader>dp", function() dap.step_over() end,         desc = "Step over" },
+  { "<leader>di", function() dap.step_into() end,         desc = "Step into" },
+  { "<leader>do", function() dap.step_out() end,          desc = "Step out" },
+  { "<leader>db", function() dap.toggle_breakpoint() end, desc = "Toggle breakpoint" },
+  { "<leader>dl", function() dap.run_last() end,          desc = "Run last" },
+  { "<leader>du", function() dapui.toggle() end,          desc = "UI?" },
 })
 
 
@@ -126,7 +132,7 @@ lspconfig.wgsl_analyzer.setup {}
 
 -- ZIG
 add('ziglang/zig.vim')
-lspconfig.zls.setup{}
+lspconfig.zls.setup {}
 -- dap.adapters.lldb = {
 --   type = 'executable',
 --   command = 'C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe', -- adjust as needed, must be absolute path
