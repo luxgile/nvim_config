@@ -21,14 +21,9 @@ require('mini.completion').setup({
   set_vim_settings = true,
 })
 
--- Snippets
-add('echasnovski/mini.snippets')
-local gen_loader = require('mini.snippets').gen_loader
-require('mini.snippets').setup({
-  snippets = {
-    gen_loader.from_lang(),
-  },
-})
+-- Comment
+add('echasnovski/mini.comment')
+require("mini.comment").setup()
 
 -- Surround
 add('echasnovski/mini.surround')
@@ -50,11 +45,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { "gd",         function() MiniExtra.pickers.lsp({ scope = "definition" }) end,     desc = "Go to definition" },
       { "gi",         function() MiniExtra.pickers.lsp({ scope = "implementation" }) end, desc = "Go to implementation" },
       { "gr",         function() MiniExtra.pickers.lsp({ scope = "references" }) end,     desc = "Go to references" },
-      { "<leader>rn", function() vim.lsp.buf.rename() end,             desc = "Rename" },
-      { "K",          function() vim.lsp.buf.hover(opts) end,          desc = "Hover" },
-      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,    desc = "Code action" },
-      { "<leader>cf", function() vim.lsp.buf.format(opts) end,         desc = "Code format" },
-      { "<leader>cq", function() MiniExtra.pickers.diagnostic() end,   desc = "Open diagnostics" },
+      { "<leader>rn", function() vim.lsp.buf.rename() end,                                desc = "Rename" },
+      { "K",          function() vim.lsp.buf.hover(opts) end,                             desc = "Hover" },
+      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,                       desc = "Code action" },
+      { "<leader>cf", function() vim.lsp.buf.format(opts) end,                            desc = "Code format" },
+      { "<leader>cq", function() MiniExtra.pickers.diagnostic() end,                      desc = "Open diagnostics" },
     })
   end
 })
@@ -150,3 +145,24 @@ dap.configurations.zig = {
     args = {},
   },
 }
+
+-- Web
+lspconfig.ts_ls.setup {
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/usr/local/lib/node_modules/@vue/language-server",
+        languages = { "javascript", "typescript", "vue" },
+      }
+    }
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+  },
+}
+lspconfig.volar.setup {}
+lspconfig.html.setup {}
+lspconfig.eslint.setup {}

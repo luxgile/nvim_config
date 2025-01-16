@@ -16,11 +16,15 @@ add('nvim-tree/nvim-web-devicons')
 -- end)
 
 -- Theme
+add('rose-pine/neovim')
 add('echasnovski/mini.colors')
 now(function() require('mini.colors').setup() end)
 -- add('echasnovski/mini.hues')
 -- now(function() require('mini.hues').setup() end)
-vim.cmd([[colorscheme minicyan]])
+
+
+-- vim.cmd([[colorscheme minicyan]])
+vim.cmd([[colorscheme rose-pine]])
 
 -- Statusline
 add('echasnovski/mini.statusline')
