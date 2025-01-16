@@ -1,16 +1,5 @@
-# Requirements
-- Neovim 0.8
-- 'curl' command
-- gcc or other C compiler
-- git
+# Config
+Mainly uses mini.nvim plugins with some exceptions.
 
-# Quickstart
-- **Windows**: git clone https://github.com/luxgile/nvim_config.git $HOME/AppData/Local/nvim/
-- **Linux**: git clone https://github.com/luxgile/nvim_config.git ~/.config/nvim/
-- Open nvim and run:
-    - :PlugInstall
-    - :PackerInstall
-    - :PackerUpdate
-
-# Keysbindings
-- F10 - Open settings file
+Requires minimal work for this to work. Only make sure to download the necessary 
+lsp needed using Mason (Rust, Lua, etc.)
