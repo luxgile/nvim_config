@@ -146,6 +146,19 @@ dap.configurations.zig = {
   },
 }
 
+-- Go
+lspconfig.gopls.setup({
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
+    },
+  },
+})
+
 -- Web
 lspconfig.ts_ls.setup {
   init_options = {

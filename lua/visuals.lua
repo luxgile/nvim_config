@@ -17,6 +17,7 @@ add('nvim-tree/nvim-web-devicons')
 
 -- Theme
 add('rose-pine/neovim')
+add('ellisonleao/gruvbox.nvim')
 add('echasnovski/mini.colors')
 now(function() require('mini.colors').setup() end)
 -- add('echasnovski/mini.hues')
@@ -24,7 +25,8 @@ now(function() require('mini.colors').setup() end)
 
 
 -- vim.cmd([[colorscheme minicyan]])
-vim.cmd([[colorscheme rose-pine]])
+vim.o.background = "dark"
+vim.cmd([[colorscheme gruvbox]])
 
 -- Statusline
 add('echasnovski/mini.statusline')
@@ -32,4 +34,8 @@ now(function() require('mini.statusline').setup() end)
 
 -- Treesitter
 add('nvim-treesitter/nvim-treesitter')
-require('nvim-treesitter.configs').setup({})
+require('nvim-treesitter.configs').setup({
+  highlight = {
+    enable = true,
+  }
+})

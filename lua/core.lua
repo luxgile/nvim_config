@@ -17,7 +17,11 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
-vim.keymap.set('n', '<leader>fp', ':e ~/AppData/Local/nvim/<CR>')
+if vim.loop.os_uname().sysname == "Windows" then
+  vim.keymap.set('n', '<leader>fp', ':e ~/AppData/Local/nvim/<CR>')
+elseif vim.loop.os_uname().sysname == "Linux" then
+  vim.keymap.set('n', '<leader>fp', ':e ~/.config/nvim/<CR>')
+end
 
 if vim.g.neovide then
   vim.o.guifont = "Iosevka Nerd Font Propo:h20"
