@@ -12,13 +12,31 @@ add('neovim/nvim-lspconfig')
 local lspconfig = require('lspconfig')
 
 -- Auto completion
-add('echasnovski/mini.completion')
-require('mini.completion').setup({
-  lsp_completion = {
-    source_func = "omnifunc",
-    -- auto_setup = false,
+-- Removed Mini Completion due to lack of handling snippets
+-- add('echasnovski/mini.completion')
+-- require('mini.completion').setup({
+--   lsp_completion = {
+--     source_func = "omnifunc",
+--     -- auto_setup = false,
+--   },
+--   set_vim_settings = true,
+-- })
+
+add({
+  source = 'saghen/blink.cmp',
+  checkout = 'v0.10.0'
+})
+require('blink.cmp').setup({
+  keymap = { preset = 'enter' },
+  snippets = { preset = 'luasnip' },
+  sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' }
   },
-  set_vim_settings = true,
+  completion = {
+    list = {
+      selection = { preselect = false, auto_insert = false },
+    }
+  },
 })
 
 -- Comment
@@ -29,6 +47,9 @@ require("mini.comment").setup()
 add('echasnovski/mini.surround')
 require('mini.surround').setup()
 
+-- More text objects
+add('echasnovski/mini.ai')
+require('mini.ai').setup()
 
 -- Picker
 add('echasnovski/mini.extra')
@@ -191,22 +212,40 @@ lspconfig.gopls.setup({
 })
 
 -- Web
-lspconfig.ts_ls.setup {
-  init_options = {
-    plugins = {
-      {
-        name = "@vue/typescript-plugin",
-        location = "/usr/local/lib/node_modules/@vue/language-server",
-        languages = { "javascript", "typescript", "vue" },
-      }
-    }
-  },
-  filetypes = {
-    "javascript",
-    "typescript",
-    "vue",
-  },
+-- lspconfig.ts_ls.setup {
+--   init_options = {
+--     plugins = {
+--       {
+--         name = "@vue/typescript-plugin",
+--         location = "/usr/local/lib/node_modules/@vue/language-server",
+--         languages = { "javascript", "typescript", "vue" },
+--       }
+--     }
+--   },
+--   filetypes = {
+--     "javascript",
+--     "typescript",
+--     "vue",
+--   },
+-- }
+lspconfig.volar.setup {
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    init_options = {
+        vue = {
+            hybridMode = false,
+        },
+        typescript = {
+            tsdk = "/home/guille/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib/"
+        },
+    },
 }
-lspconfig.volar.setup {}
-lspconfig.html.setup {}
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+lspconfig.html.setup {
+  capabilities = capabilities
+}
 lspconfig.eslint.setup {}
+lspconfig.cssls.setup {
+  capabilities = capabilities,
+}

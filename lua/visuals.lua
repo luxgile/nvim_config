@@ -6,13 +6,13 @@ add('nvim-tree/nvim-web-devicons')
 
 -- Animate actions
 -- add('echasnovski/mini.animate')
--- now(function() 
+-- now(function()
 --   local animate = require('mini.animate')
 --   animate.setup({
 --     scroll = {
 --       enabled = false
 --     }
---   }) 
+--   })
 -- end)
 
 -- Theme
@@ -33,8 +33,14 @@ add('echasnovski/mini.statusline')
 now(function() require('mini.statusline').setup() end)
 
 -- Treesitter
-add('nvim-treesitter/nvim-treesitter')
+add({
+  source = 'nvim-treesitter/nvim-treesitter',
+  checkout = 'master',
+  monitor = 'main',
+  hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+})
 require('nvim-treesitter.configs').setup({
+  auto_install = true,
   highlight = {
     enable = true,
   }
