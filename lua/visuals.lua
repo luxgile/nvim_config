@@ -1,5 +1,7 @@
 local add, now = MiniDeps.add, MiniDeps.now
 
+
+
 -- Icons
 add('echasnovski/mini.icons')
 add('nvim-tree/nvim-web-devicons')
@@ -18,6 +20,7 @@ add('nvim-tree/nvim-web-devicons')
 -- Theme
 add('rose-pine/neovim')
 add('ellisonleao/gruvbox.nvim')
+add('catppuccin/nvim')
 add('echasnovski/mini.colors')
 now(function() require('mini.colors').setup() end)
 -- add('echasnovski/mini.hues')
@@ -26,7 +29,13 @@ now(function() require('mini.colors').setup() end)
 
 -- vim.cmd([[colorscheme minicyan]])
 vim.o.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[colorscheme gruvbox]])
+vim.cmd([[colorscheme rose-pine-main]])
+-- require("catppuccin").setup({
+--   flavour = "mocha",
+--   transparent_background = true,
+-- })
+-- vim.cmd([[colorscheme catppuccin]])
 
 -- Statusline
 add('echasnovski/mini.statusline')

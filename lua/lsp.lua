@@ -249,3 +249,12 @@ lspconfig.eslint.setup {}
 lspconfig.cssls.setup {
   capabilities = capabilities,
 }
+
+-- Python
+lspconfig.pyright.setup({})
+local group = vim.api.nvim_create_augroup("Black", { clear = true })
+vim.api.nvim_create_autocmd("bufWritePost", {
+	pattern = "*.py",
+	command = "silent !black %",
+	group = group,
+})
