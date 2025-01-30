@@ -258,3 +258,7 @@ vim.api.nvim_create_autocmd("bufWritePost", {
 	command = "silent !black %",
 	group = group,
 })
+
+-- Markdown
+add('MeanderingProgrammer/render-markdown.nvim')
+require('render-markdown').setup({})
