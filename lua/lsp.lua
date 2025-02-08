@@ -212,34 +212,34 @@ lspconfig.gopls.setup({
 })
 
 -- Web
--- lspconfig.ts_ls.setup {
---   init_options = {
---     plugins = {
---       {
---         name = "@vue/typescript-plugin",
---         location = "/usr/local/lib/node_modules/@vue/language-server",
---         languages = { "javascript", "typescript", "vue" },
---       }
---     }
---   },
---   filetypes = {
---     "javascript",
---     "typescript",
---     "vue",
---   },
--- }
-lspconfig.volar.setup {
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-    init_options = {
-        vue = {
-            hybridMode = false,
-        },
-        typescript = {
-            tsdk = "/home/guille/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib/"
-        },
-    },
+lspconfig.ts_ls.setup {
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = "/usr/local/lib/node_modules/@vue/language-server",
+        languages = { "javascript", "typescript", "vue" },
+      }
+    }
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "vue",
+  },
 }
-
+-- lspconfig.volar.setup {
+--     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+--     init_options = {
+--         vue = {
+--             hybridMode = false,
+--         },
+--         typescript = {
+--             tsdk = "/home/guille/.local/share/nvim/mason/packages/vue-language-server/node_modules/typescript/lib/"
+--         },
+--     },
+-- }
+--
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.html.setup {
