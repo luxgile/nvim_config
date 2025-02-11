@@ -2,9 +2,8 @@ local add = MiniDeps.add
 local wk = require("which-key")
 
 -- Generic picker
-add('echasnovski/mini.pick')
-require('mini.pick').setup()
-vim.ui.select = MiniPick.ui_select
+add('folke/snacks.nvim')
+require('snacks').setup()
 
 -- Recent files
 add('echasnovski/mini.visits')
@@ -22,9 +21,9 @@ require('mini.files').setup({
 wk.add({
   { "<leader>f", group = "Files" },
   { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>", desc = "File tree" },
-  { "<leader>ff", "<cmd>Pick files<cr>", desc = "Find file" },
-  { "<leader>fg", "<cmd>Pick grep_live<cr>", desc = "Fuzzy find" },
+  { "<leader>ff", function() Snacks.picker.files() end, desc = "Find file" },
+  { "<leader>fg", function() Snacks.picker.grep() end, desc = "Fuzzy find" },
   { "<leader>b", group = "Buffers" },
-  { "<leader>bb", "<cmd>Pick buffers<cr>", desc = "Select buffer" },
+  { "<leader>bb", function () Snacks.picker.buffers() end, desc = "Select buffer" },
 })
 
