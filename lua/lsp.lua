@@ -62,15 +62,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     -- MiniCompletion.completefunc_lsp()
     local opts = { buffer = ev.buf }
     wk.add({
-      { "gD",         function() MiniExtra.pickers.lsp({ scope = "declaration" }) end,    desc = "Go to declaration" },
-      { "gd",         function() MiniExtra.pickers.lsp({ scope = "definition" }) end,     desc = "Go to definition" },
-      { "gi",         function() MiniExtra.pickers.lsp({ scope = "implementation" }) end, desc = "Go to implementation" },
-      { "gr",         function() MiniExtra.pickers.lsp({ scope = "references" }) end,     desc = "Go to references" },
-      { "<leader>rn", function() vim.lsp.buf.rename() end,                                desc = "Rename" },
-      { "K",          function() vim.lsp.buf.hover(opts) end,                             desc = "Hover" },
-      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,                       desc = "Code action" },
-      { "<leader>cf", function() vim.lsp.buf.format(opts) end,                            desc = "Code format" },
-      { "<leader>cq", function() MiniExtra.pickers.diagnostic() end,                      desc = "Open diagnostics" },
+      { "<leader>u",  function() Snacks.picker.undo() end,                desc = "Undo history" },
+      { "gD",         function() Snacks.picker.lsp_declarations() end,    desc = "Go to declaration" },
+      { "gd",         function() Snacks.picker.lsp_definitions() end,     desc = "Go to definition" },
+      { "gi",         function() Snacks.picker.lsp_implementations() end, desc = "Go to implementation" },
+      { "gr",         function() Snacks.picker.lsp_references() end,      desc = "Go to references" },
+      { "<leader>rn", function() vim.lsp.buf.rename() end,                 desc = "Rename" },
+      { "K",          function() vim.lsp.buf.hover(opts) end,              desc = "Hover" },
+      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,        desc = "Code action" },
+      { "<leader>cf", function() vim.lsp.buf.format(opts) end,             desc = "Code format" },
+      { "<leader>cq", function() Snacks.picker.diagnostics() end,          desc = "Open diagnostics" },
     })
   end
 })
@@ -254,9 +255,9 @@ lspconfig.cssls.setup {
 lspconfig.pyright.setup({})
 local group = vim.api.nvim_create_augroup("Black", { clear = true })
 vim.api.nvim_create_autocmd("bufWritePost", {
-	pattern = "*.py",
-	command = "silent !black %",
-	group = group,
+  pattern = "*.py",
+  command = "silent !black %",
+  group = group,
 })
 
 -- Markdown
