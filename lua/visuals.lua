@@ -29,8 +29,14 @@ vim.cmd([[colorscheme github_dark_default]])
 -- vim.cmd([[colorscheme catppuccin]])
 
 -- Statusline
-add('echasnovski/mini.statusline')
-now(function() require('mini.statusline').setup() end)
+add('nvim-lualine/lualine.nvim')
+now(function()
+  require('lualine').setup({
+    options = {
+      theme = "horizon"
+    }
+  })
+end)
 
 -- Treesitter
 add({
