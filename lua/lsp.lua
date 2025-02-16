@@ -116,3 +116,7 @@ vim.api.nvim_create_autocmd("bufWritePost", {
 
 -- Markdown
 require('render-markdown').setup({})
+
+
+-- C / C++
+lspconfig.clangd.setup({})
