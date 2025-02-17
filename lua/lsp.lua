@@ -268,10 +268,11 @@ require('render-markdown').setup({})
 -- C
 lspconfig.clangd.setup({
   capabilities = capabilities,
+  on_attach = function(client, bufnr)
+  wk.add({
+    { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
+  })
+  end
 })
 
-lspconfig.neocmake.setup({
-  keys = {
-    { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
-  },
-})
+lspconfig.neocmake.setup({})
