@@ -17,7 +17,7 @@ vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 
-if vim.loop.os_uname().sysname == "Windows" then
+if vim.loop.os_uname().sysname == "Windows_NT" then
   vim.keymap.set('n', '<leader>fp', ':e ~/AppData/Local/nvim/<CR>')
 elseif vim.loop.os_uname().sysname == "Linux" then
   vim.keymap.set('n', '<leader>fp', ':e ~/.config/nvim/<CR>')

@@ -270,4 +270,8 @@ lspconfig.clangd.setup({
   capabilities = capabilities,
 })
 
-lspconfig.neocmake.setup({})
+lspconfig.neocmake.setup({
+  keys = {
+    { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
+  },
+})
