@@ -243,6 +243,7 @@ lspconfig.ts_ls.setup {
 --
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 lspconfig.html.setup {
   capabilities = capabilities
 }
@@ -263,3 +264,10 @@ vim.api.nvim_create_autocmd("bufWritePost", {
 -- Markdown
 add('MeanderingProgrammer/render-markdown.nvim')
 require('render-markdown').setup({})
+
+-- C
+lspconfig.clangd.setup({
+  capabilities = capabilities,
+})
+
+lspconfig.neocmake.setup({})
