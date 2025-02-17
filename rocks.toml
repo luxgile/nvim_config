@@ -35,6 +35,9 @@ tree-sitter-toml = "0.0.31"
 rustaceanvim = "5.24.4"
 "render-markdown.nvim" = "8.0.0"
 tree-sitter-python = "0.0.40"
+tree-sitter-cpp = "0.0.41"
+tree-sitter-cmake = "0.0.31"
+tree-sitter-json = "0.0.36"
 
 [plugins.nvim-web-devicons]
 git = "nvim-tree/nvim-web-devicons"
