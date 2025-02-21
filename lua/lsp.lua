@@ -1,6 +1,33 @@
 local add = MiniDeps.add
 local wk = require("which-key")
 
+-- Utils library
+add('nvim-lua/plenary.nvim')
+
+-- Task runner (To avoid using the console when possible)
+add('stevearc/overseer.nvim')
+local overseer = require('overseer')
+overseer.setup({})
+overseer.register_template({
+  name = "cmake build",
+  builder = function(params)
+    return {
+      cmd = { 'cmake' },
+      args = { '--build', 'build' },
+      name = 'Build',
+    }
+  end,
+  desc = "Build current project using cmake.",
+  tags = { overseer.TAG.BUILD },
+  condition = {
+    filetype = { 'c', 'cpp' },
+  }
+})
+wk.add({
+  { "<leader>cc", "<cmd>OverseerRun<cr>",    desc = "Code Run..." },
+  { "<leader>ct", "<cmd>OverseerToggle<cr>", desc = "Toggle tasks running" },
+})
+
 -- LSP browser
 add('williamboman/mason.nvim')
 require("mason").setup()
@@ -67,11 +94,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { "gd",         function() Snacks.picker.lsp_definitions() end,     desc = "Go to definition" },
       { "gi",         function() Snacks.picker.lsp_implementations() end, desc = "Go to implementation" },
       { "gr",         function() Snacks.picker.lsp_references() end,      desc = "Go to references" },
-      { "<leader>rn", function() vim.lsp.buf.rename() end,                 desc = "Rename" },
-      { "K",          function() vim.lsp.buf.hover(opts) end,              desc = "Hover" },
-      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,        desc = "Code action" },
-      { "<leader>cf", function() vim.lsp.buf.format(opts) end,             desc = "Code format" },
-      { "<leader>cq", function() Snacks.picker.diagnostics() end,          desc = "Open diagnostics" },
+      { "<leader>rn", function() vim.lsp.buf.rename() end,                desc = "Rename" },
+      { "K",          function() vim.lsp.buf.hover(opts) end,             desc = "Hover" },
+      { "<leader>a",  function() vim.lsp.buf.code_action(opts) end,       desc = "Code action" },
+      { "<leader>c",  group = "Code" },
+      { "<leader>cf", function() vim.lsp.buf.format(opts) end,            desc = "Code format" },
+      { "<leader>cq", function() Snacks.picker.diagnostics() end,         desc = "Open diagnostics" },
     })
   end
 })
@@ -269,9 +297,9 @@ require('render-markdown').setup({})
 lspconfig.clangd.setup({
   capabilities = capabilities,
   on_attach = function(client, bufnr)
-  wk.add({
-    { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
-  })
+    wk.add({
+      { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
+    })
   end
 })
 
