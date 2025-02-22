@@ -9,12 +9,30 @@ add('stevearc/overseer.nvim')
 local overseer = require('overseer')
 overseer.setup({})
 overseer.register_template({
+  name = "cmake generate",
+  builder = function(params)
+    return {
+      cmd = { 'cmake' },
+      args = { '--preset', 'default' },
+      name = 'Generate cmake project.',
+    }
+  end,
+  desc = "Build current project using cmake.",
+  tags = { overseer.TAG.BUILD },
+  condition = {
+    callback = function(search)
+      local paths = vim.fs.find('CMakeLists.txt', { upward = true, type = 'file' })
+      return #paths > 0
+    end,
+  }
+})
+overseer.register_template({
   name = "cmake build",
   builder = function(params)
     return {
       cmd = { 'cmake' },
       args = { '--build', 'build' },
-      name = 'Build',
+      name = 'Build cmake project.',
     }
   end,
   desc = "Build current project using cmake.",
