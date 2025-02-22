@@ -44,6 +44,27 @@ overseer.register_template({
     end,
   }
 })
+overseer.register_template({
+  name = "run build",
+  builder = function(params)
+    local build_dir = vim.fs.find('build', { upward = true, type = 'directory' })
+    local executables = vim.fn.filter(vim.fn.split(vim.fn.glob(build_dir[1] .. "/*"), "\n"),
+      'stridx(v:val, ".") == -1 && isdirectory(v:val) == 0')
+    local splits = vim.fn.split(executables[1], '/')
+    local name = splits[#splits]
+    return {
+      cmd = { executables[1] },
+      name = 'Run ' .. name,
+    }
+  end,
+  desc = "Find and run files inside the build directory.",
+  condition = {
+    callback = function(search)
+      local paths = vim.fs.find('build', { upward = true, type = 'directory' })
+      return #paths > 0
+    end,
+  }
+})
 wk.add({
   { "<leader>cc", "<cmd>OverseerRun<cr>",    desc = "Code Run..." },
   { "<leader>ct", "<cmd>OverseerToggle<cr>", desc = "Toggle tasks running" },
