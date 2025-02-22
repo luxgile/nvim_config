@@ -7,7 +7,9 @@ add('nvim-lua/plenary.nvim')
 -- Task runner (To avoid using the console when possible)
 add('stevearc/overseer.nvim')
 local overseer = require('overseer')
-overseer.setup({})
+overseer.setup({
+  strategy = { "toggleterm", quit_on_exit = "success" },
+})
 overseer.register_template({
   name = "cmake generate",
   builder = function(params)

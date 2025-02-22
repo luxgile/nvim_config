@@ -9,5 +9,6 @@ require("projects")
 require("git")
 require("snippets")
 require("ai")
+require("terminal")
 
 require("lsp")
