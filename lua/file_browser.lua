@@ -3,13 +3,15 @@ local wk = require("which-key")
 
 -- Generic picker
 add('folke/snacks.nvim')
-require('snacks').setup()
+require('snacks').setup({
+  picker = { enabled = true },
+})
 
 -- Recent files
 add('echasnovski/mini.visits')
-require('mini.visits').setup() 
+require('mini.visits').setup()
 
--- Mini file browser 
+-- Mini file browser
 add('echasnovski/mini.files')
 require('mini.files').setup({
   mappings = {
@@ -19,11 +21,10 @@ require('mini.files').setup({
 })
 
 wk.add({
-  { "<leader>f", group = "Files" },
-  { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>", desc = "File tree" },
-  { "<leader>ff", function() Snacks.picker.files() end, desc = "Find file" },
-  { "<leader>fg", function() Snacks.picker.grep() end, desc = "Fuzzy find" },
-  { "<leader>b", group = "Buffers" },
-  { "<leader>bb", function () Snacks.picker.buffers() end, desc = "Select buffer" },
+  { "<leader>f",  group = "Files" },
+  { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>",         desc = "File tree" },
+  { "<leader>ff", function() Snacks.picker.files() end,    desc = "Find file" },
+  { "<leader>fg", function() Snacks.picker.grep() end,     desc = "Fuzzy find" },
+  { "<leader>b",  group = "Buffers" },
+  { "<leader>bb", function() Snacks.picker.buffers() end,  desc = "Select buffer" },
 })
-

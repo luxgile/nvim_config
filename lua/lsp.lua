@@ -20,7 +20,10 @@ overseer.register_template({
   desc = "Build current project using cmake.",
   tags = { overseer.TAG.BUILD },
   condition = {
-    filetype = { 'c', 'cpp' },
+    callback = function(search)
+      local paths = vim.fs.find('CMakeLists.txt', { upward = true, type = 'file' })
+      return #paths > 0
+    end,
   }
 })
 wk.add({
