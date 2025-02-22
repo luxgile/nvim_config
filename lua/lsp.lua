@@ -18,7 +18,6 @@ overseer.register_template({
     }
   end,
   desc = "Build current project using cmake.",
-  tags = { overseer.TAG.BUILD },
   condition = {
     callback = function(search)
       local paths = vim.fs.find('CMakeLists.txt', { upward = true, type = 'file' })
@@ -45,7 +44,7 @@ overseer.register_template({
   }
 })
 overseer.register_template({
-  name = "run build",
+  name = "cmake build and run",
   builder = function(params)
     local build_dir = vim.fs.find('build', { upward = true, type = 'directory' })
     local executables = vim.fn.filter(vim.fn.split(vim.fn.glob(build_dir[1] .. "/*"), "\n"),
@@ -55,9 +54,18 @@ overseer.register_template({
     return {
       cmd = { executables[1] },
       name = 'Run ' .. name,
+      components = {
+        {
+          "dependencies",
+          task_names = { "cmake build" },
+          sequential = true
+        },
+        { "on_exit_set_status" }
+      },
     }
   end,
   desc = "Find and run files inside the build directory.",
+  tags = { overseer.TAG.RUN },
   condition = {
     callback = function(search)
       local paths = vim.fs.find('build', { upward = true, type = 'directory' })
@@ -65,9 +73,23 @@ overseer.register_template({
     end,
   }
 })
+-- TODO: Check overseer tags (bind to c b for build and c r for run?)
+-- local task = overseer.new_task({
+--   name = "Build and run app",
+--   strategy = {
+--     "orchestrator",
+--     tasks = {
+--       "cmake build",
+--       "run build",
+--     },
+--   },
+-- })
+-- task:start()
 wk.add({
-  { "<leader>cc", "<cmd>OverseerRun<cr>",    desc = "Code Run..." },
-  { "<leader>ct", "<cmd>OverseerToggle<cr>", desc = "Toggle tasks running" },
+  { "<leader>cc", "<cmd>OverseerRun<cr>",                                                  desc = "Code Run..." },
+  { "<leader>ct", "<cmd>OverseerToggle<cr>",                                               desc = "Toggle tasks running" },
+  { "<leader>cb", function() overseer.run_template({ tags = { overseer.TAG.BUILD } }) end, desc = "Default build" },
+  { "<leader>cr", function() overseer.run_template({ tags = { overseer.TAG.RUN } }) end,   desc = "Default run" },
 })
 
 -- LSP browser
