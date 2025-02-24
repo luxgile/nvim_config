@@ -48,10 +48,17 @@ overseer.register_template({
 overseer.register_template({
   name = "cmake build and run",
   builder = function(params)
-    -- TODO: Look for "Debug" and "Releases" folders as well
+    local get_executables_in_folder = function(folder)
+      local executables = vim.fn.split(vim.fn.glob(folder .. "/*"), "\n")
+      return vim.fn.filter(executables,
+        '(stridx(v:val, ".") == -1 || stridx(v:val, ".exe") != -1) && isdirectory(v:val) == 0')
+    end
     local build_dir = vim.fs.find('build', { upward = true, type = 'directory' })
-    local executables = vim.fn.filter(vim.fn.split(vim.fn.glob(build_dir[1] .. "/*"), "\n"),
-      '(stridx(v:val, ".") == -1 || stridx(v:val, ".exe") != -1) && isdirectory(v:val) == 0')
+    local debug_dir = vim.fs.find({ 'Debug', 'Releases' }, { path = build_dir[1], type = 'directory' })
+    local executables = get_executables_in_folder(build_dir[1])
+    if #debug_dir > 0 then
+      executables = vim.fn.extend(executables, get_executables_in_folder(debug_dir[1]))
+    end
     local splits = vim.fn.split(executables[1], '/')
     local name = splits[#splits]
     return {
