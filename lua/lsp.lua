@@ -50,7 +50,7 @@ overseer.register_template({
   builder = function(params)
     local build_dir = vim.fs.find('build', { upward = true, type = 'directory' })
     local executables = vim.fn.filter(vim.fn.split(vim.fn.glob(build_dir[1] .. "/*"), "\n"),
-      'stridx(v:val, ".") == -1 && isdirectory(v:val) == 0')
+      '(stridx(v:val, ".") == -1 || stridx(v:val, ".exe") != -1) && isdirectory(v:val) == 0')
     local splits = vim.fn.split(executables[1], '/')
     local name = splits[#splits]
     return {
