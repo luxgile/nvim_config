@@ -48,6 +48,7 @@ overseer.register_template({
 overseer.register_template({
   name = "cmake build and run",
   builder = function(params)
+    -- TODO: Look for "Debug" and "Releases" folders as well
     local build_dir = vim.fs.find('build', { upward = true, type = 'directory' })
     local executables = vim.fn.filter(vim.fn.split(vim.fn.glob(build_dir[1] .. "/*"), "\n"),
       '(stridx(v:val, ".") == -1 || stridx(v:val, ".exe") != -1) && isdirectory(v:val) == 0')
@@ -75,18 +76,6 @@ overseer.register_template({
     end,
   }
 })
--- TODO: Check overseer tags (bind to c b for build and c r for run?)
--- local task = overseer.new_task({
---   name = "Build and run app",
---   strategy = {
---     "orchestrator",
---     tasks = {
---       "cmake build",
---       "run build",
---     },
---   },
--- })
--- task:start()
 wk.add({
   { "<leader>cc", "<cmd>OverseerRun<cr>",                                                  desc = "Code Run..." },
   { "<leader>ct", "<cmd>OverseerToggle<cr>",                                               desc = "Toggle tasks running" },
