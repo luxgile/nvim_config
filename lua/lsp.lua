@@ -8,7 +8,7 @@ add('nvim-lua/plenary.nvim')
 add('stevearc/overseer.nvim')
 local overseer = require('overseer')
 overseer.setup({
-  strategy = { "toggleterm", quit_on_exit = "success" },
+  strategy = { "toggleterm" },
 })
 overseer.register_template({
   name = "cmake generate",
