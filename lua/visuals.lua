@@ -51,3 +51,7 @@ require('nvim-treesitter.configs').setup({
     enable = true,
   }
 })
+
+-- Indent maker
+add('lukas-reineke/indent-blankline.nvim')
+now(function() require('ibl').setup() end)
