@@ -19,3 +19,6 @@ require('mini.notify').setup()
 -- 2D Navigation
 add('echasnovski/mini.jump2d')
 require('mini.jump2d').setup()
+
+-- Profile startup
+add('dstein64/vim-startuptime')
