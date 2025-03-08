@@ -466,7 +466,8 @@ overseer.register_template({
   name = "dotnet run",
   builder = function(params)
     return {
-      cmd = { 'dotnet run' },
+      cmd = { 'dotnet' },
+      args = { 'run' },
       name = 'Run CSharp Project',
     }
   end,
