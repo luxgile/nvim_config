@@ -4,6 +4,20 @@ local wk = require("which-key")
 -- Utils library
 add('nvim-lua/plenary.nvim')
 
+-- Formatter
+add('stevearc/conform.nvim')
+require('conform').setup({
+  formatters_by_ft = {
+    cs = { "csharpier" },
+  },
+  formatters = {
+    csharpier = {
+      command = "dotnet-csharpier",
+      args = { "--write-stdout" },
+    },
+  },
+})
+
 -- Task runner (To avoid using the console when possible)
 add('stevearc/overseer.nvim')
 local overseer = require('overseer')
@@ -92,7 +106,12 @@ wk.add({
 
 -- LSP browser
 add('williamboman/mason.nvim')
-require("mason").setup()
+require("mason").setup({
+  registries = {
+    "github:mason-org/mason-registry",
+    "github:Crashdummyy/mason-registry"
+  },
+})
 
 -- LSP Config extensions
 add('williamboman/mason-lspconfig.nvim')
@@ -386,3 +405,77 @@ for _, lang in ipairs({ "c", "cpp" }) do
     },
   }
 end
+
+-- GLSL
+lspconfig.glslls.setup {}
+
+-- Godot
+lspconfig.gdscript.setup {}
+lspconfig.gdshader_lsp.setup {}
+
+-- C#
+-- add('Hoffs/omnisharp-extended-lsp.nvim')
+-- lspconfig.omnisharp.setup {
+--   handlers = {
+--     ["textDocument/definition"] = function(...)
+--       return require("omnisharp_extended").handler(...)
+--     end,
+--   },
+--   keys = {
+--     {
+--       "gd",
+--       function()
+--         require("omnisharp_extended").lsp_definitions()
+--       end,
+--       desc = "Goto Definition",
+--     },
+--   },
+--   enable_roslyn_analyzers = true,
+--   organize_imports_on_format = true,
+--   enable_import_completion = true,
+-- }
+add('seblyng/roslyn.nvim')
+require('roslyn').setup()
+if not dap.adapters["netcoredbg"] then
+  require("dap").adapters["netcoredbg"] = {
+    type = "executable",
+    command = vim.fn.exepath("netcoredbg"),
+    args = { "--interpreter=vscode" },
+    options = {
+      detached = false,
+    },
+  }
+end
+for _, lang in ipairs({ "cs", "fsharp", "vb" }) do
+  if not dap.configurations[lang] then
+    dap.configurations[lang] = {
+      {
+        type = "netcoredbg",
+        name = "Launch file",
+        request = "launch",
+        ---@diagnostic disable-next-line: redundant-parameter
+        program = function()
+          return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+      },
+    }
+  end
+end
+overseer.register_template({
+  name = "dotnet run",
+  builder = function(params)
+    return {
+      cmd = { 'dotnet run' },
+      name = 'Run CSharp Project',
+    }
+  end,
+  desc = "Use dotnet to run the C# project",
+  tags = { overseer.TAG.RUN },
+  condition = {
+    callback = function(search)
+      -- Check if root has a visual studio project file
+      return vim.fs.find('*.csproj', { upward = true, type = 'file' })
+    end,
+  }
+})
