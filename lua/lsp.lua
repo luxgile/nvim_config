@@ -480,3 +480,6 @@ overseer.register_template({
     end,
   }
 })
+
+-- Odin
+lspconfig.ols.setup {}
