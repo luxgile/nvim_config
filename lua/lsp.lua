@@ -4,6 +4,10 @@ local wk = require("which-key")
 -- Utils library
 add('nvim-lua/plenary.nvim')
 
+-- See function def while writing
+add('ray-x/lsp_signature.nvim')
+require("lsp_signature").setup({})
+
 -- Formatter
 add('stevearc/conform.nvim')
 require('conform').setup({
@@ -482,4 +486,8 @@ overseer.register_template({
 })
 
 -- Odin
-lspconfig.ols.setup {}
+lspconfig.ols.setup({
+  on_attach = function (client, bufnr)
+    require("lsp_signature").on_attach({}, bufnr)
+  end
+})
