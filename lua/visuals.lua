@@ -19,7 +19,7 @@ now(function() require('mini.colors').setup() end)
 
 -- vim.cmd([[colorscheme minicyan]])
 vim.o.background = "dark"
-vim.cmd([[colorscheme github_dark_default]])
+vim.cmd([[colorscheme github_dark_high_contrast]])
 -- vim.cmd([[colorscheme gruvbox]])
 -- vim.cmd([[colorscheme rose-pine-main]])
 -- require("catppuccin").setup({
