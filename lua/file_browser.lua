@@ -22,9 +22,10 @@ require('mini.files').setup({
 
 wk.add({
   { "<leader>f",  group = "Files" },
-  { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>",         desc = "File tree" },
-  { "<leader>ff", function() Snacks.picker.files() end,    desc = "Find file" },
-  { "<leader>fg", function() Snacks.picker.grep() end,     desc = "Fuzzy find" },
+  { "<leader>ft", "<cmd>lua MiniFiles.open()<cr>",                  desc = "File tree" },
+  { "<leader>ff", function() Snacks.picker.files() end,             desc = "Find file" },
+  { "<leader>fg", function() Snacks.picker.grep() end,              desc = "Fuzzy find" },
+  { "<leader>fs", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Find symbols" },
   { "<leader>b",  group = "Buffers" },
-  { "<leader>bb", function() Snacks.picker.buffers() end,  desc = "Select buffer" },
+  { "<leader>bb", function() Snacks.picker.buffers() end,           desc = "Select buffer" },
 })
