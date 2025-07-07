@@ -487,7 +487,21 @@ overseer.register_template({
 
 -- Odin
 lspconfig.ols.setup({
-  on_attach = function (client, bufnr)
+  on_attach = function(client, bufnr)
     require("lsp_signature").on_attach({}, bufnr)
   end
+})
+
+-- OCaml
+lspconfig.ocamllsp.setup {}
+
+-- Honey
+vim.filetype.add({
+  pattern = {
+    ['.hun'] = 'honey',
+  },
+})
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "*.hun",
+  command = "setfiletype honey",
 })
