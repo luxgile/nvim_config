@@ -19,7 +19,7 @@ require('conform').setup({
       command = "dotnet-csharpier",
       args = { "--write-stdout" },
     },
-  },
+  }
 })
 
 -- Task runner (To avoid using the console when possible)
