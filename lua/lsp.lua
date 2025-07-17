@@ -118,8 +118,8 @@ require("mason").setup({
 })
 
 -- LSP Config extensions
-add('williamboman/mason-lspconfig.nvim')
-require("mason-lspconfig").setup()
+-- add('williamboman/mason-lspconfig.nvim')
+-- require("mason-lspconfig").setup()
 add('neovim/nvim-lspconfig')
 local lspconfig = require('lspconfig')
 
@@ -137,7 +137,7 @@ local lspconfig = require('lspconfig')
 add({
   source = "saghen/blink.cmp",
   depends = { "rafamadriz/friendly-snippets" },
-  checkout = "1.5.1",
+  checkout = "v1.5.1",
 })
 require('blink.cmp').setup({
   keymap = { preset = 'enter' },
@@ -356,7 +356,7 @@ lspconfig.ts_ls.setup {
 -- }
 --
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.snippetSupport = false
 
 lspconfig.html.setup {
   capabilities = capabilities
