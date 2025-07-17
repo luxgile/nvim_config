@@ -135,8 +135,9 @@ local lspconfig = require('lspconfig')
 -- })
 
 add({
-  source = 'saghen/blink.cmp',
-  checkout = 'v0.10.0'
+  source = "saghen/blink.cmp",
+  depends = { "rafamadriz/friendly-snippets" },
+  checkout = "1.5.1",
 })
 require('blink.cmp').setup({
   keymap = { preset = 'enter' },
