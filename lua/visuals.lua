@@ -1,7 +1,5 @@
 local add, now = MiniDeps.add, MiniDeps.now
 
-
-
 -- Icons
 add('echasnovski/mini.icons')
 add('nvim-tree/nvim-web-devicons')

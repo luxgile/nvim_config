@@ -22,3 +22,7 @@ require('mini.jump2d').setup()
 
 -- Profile startup
 add('dstein64/vim-startuptime')
+
+-- Zen mode
+add('folke/zen-mode.nvim')
+require('zen-mode').setup()
