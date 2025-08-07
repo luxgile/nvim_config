@@ -7,6 +7,7 @@ add('nvim-tree/nvim-web-devicons')
 -- Theme
 add('rose-pine/neovim')
 add('ellisonleao/gruvbox.nvim')
+add('savq/melange-nvim')
 add('catppuccin/nvim')
 add('projekt0n/github-nvim-theme')
 add('echasnovski/mini.colors')
@@ -17,9 +18,9 @@ now(function() require('mini.colors').setup() end)
 
 -- vim.cmd([[colorscheme minicyan]])
 vim.o.background = "dark"
-vim.cmd([[colorscheme github_dark_high_contrast]])
+-- vim.cmd([[colorscheme github_dark_high_contrast]])
 -- vim.cmd([[colorscheme gruvbox]])
--- vim.cmd([[colorscheme rose-pine-main]])
+vim.cmd([[colorscheme melange]])
 -- require("catppuccin").setup({
 --   flavour = "mocha",
 --   transparent_background = true,
