@@ -16,6 +16,7 @@ now(function() require('mini.colors').setup() end)
 -- now(function() require('mini.hues').setup() end)
 
 
+vim.o.winborder = "double"
 -- vim.cmd([[colorscheme minicyan]])
 vim.o.background = "dark"
 -- vim.cmd([[colorscheme github_dark_high_contrast]])
