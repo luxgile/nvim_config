@@ -502,7 +502,12 @@ vim.filetype.add({
     ['.hun'] = 'honey',
   },
 })
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.hun",
   command = "setfiletype honey",
+})
+
+-- QML (QT)
+lspconfig.qmlls.setup({
+  cmd = { "qmlls", "-E" }
 })
