@@ -55,3 +55,30 @@ require('nvim-treesitter.configs').setup({
 -- Indent maker
 add('lukas-reineke/indent-blankline.nvim')
 now(function() require('ibl').setup() end)
+
+-- Code lens - Removed because it lags a lot the LSP
+-- add('oribarilan/lensline.nvim')
+-- require('lensline').setup({
+--   providers = {
+--     {
+--       name = "references",
+--       enabled = true,
+--       quiet_lsp = true,
+--     },
+--     {
+--       name = "last_author",
+--       enabled = false,
+--       cache_max_files = 50,
+--     },
+--     {
+--       name = "diagnostics",
+--       enabled = true,
+--       min_level = "WARN",
+--     },
+--     {
+--       name = "complexity",
+--       enabled = false,
+--       min_level = "L",
+--     },
+--   }
+-- })
