@@ -15,7 +15,7 @@ syn region honey_string start=/"/ skip=/\\"/ end=/"/
 syn match honey_number "\<\d\+\(\.\d\+\)\?\>"
 syn keyword honey_bool true false
 
-syn keyword honey_primitives Int RawString Bool Float Void
+syn keyword honey_primitives i8 i16 i32 i64 cstring bool f32 f64 void
 syn match honey_type /\<[A-Z][a-zA-Z0-9_]*\>/
 syn match honey_identifier /\<[a-z_][a-zA-Z0-9_]*\>/
 syn match honey_fn "\<\h\w*\>(<tex>$[^)]*$</tex>)" contains=honey_string,honey_number
