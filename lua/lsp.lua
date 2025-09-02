@@ -510,12 +510,10 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   command = "setfiletype honey",
 })
 
-<<<<<<< HEAD
 -- Gleam
 lspconfig.gleam.setup({})
-=======
+
 -- QML (QT)
 lspconfig.qmlls.setup({
   cmd = { "qmlls", "-E" }
 })
->>>>>>> 9b01fbf1515a42c4b9f601ddc0cdf310739e591e
