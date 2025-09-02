@@ -143,7 +143,10 @@ require('blink.cmp').setup({
   keymap = { preset = 'enter' },
   snippets = { preset = 'luasnip' },
   sources = {
-    default = { 'lsp', 'path', 'snippets', 'buffer' }
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+    per_filetype = {
+      codecompanion = { "codecompanion" },
+    }
   },
   completion = {
     list = {
@@ -506,6 +509,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = "*.hun",
   command = "setfiletype honey",
 })
+
+-- Gleam
+lspconfig.gleam.setup({})
 
 -- QML (QT)
 lspconfig.qmlls.setup({
