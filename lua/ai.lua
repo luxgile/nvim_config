@@ -1,10 +1,18 @@
 local add = MiniDeps.add
 local wk = require("which-key")
 
--- TODO: Swap to the previous version. This one is very limited.
 add({
-  source = 'Exafunction/codeium.nvim',
-  depends = {'nvim-lua/plenary.nvim'}
+  source = 'olimorris/codecompanion.nvim',
+  depends = { 'nvim-lua/plenary.nvim' }
+})
+
+-- Make sure 'GEMINI_KEY' is set for this to work
+require("codecompanion").setup({
+  strategies = {
+    chat = { adapter = "gemini" },
+    inline = { adapter = "gemini" },
+    cmd = { adapter = "gemini" },
+  }
 })
 
 -- require('codeium').setup({
