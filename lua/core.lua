@@ -15,6 +15,7 @@ vim.opt.wrap = false
 
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
 vim.opt.tabstop = 2
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
