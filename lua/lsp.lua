@@ -118,10 +118,7 @@ require("mason").setup({
 })
 
 -- LSP Config extensions
--- add('williamboman/mason-lspconfig.nvim')
--- require("mason-lspconfig").setup()
 add('neovim/nvim-lspconfig')
-local lspconfig = require('lspconfig')
 
 -- Auto completion
 -- Removed Mini Completion due to lack of handling snippets
@@ -244,7 +241,7 @@ wk.add({
 
 
 -- Lua
-lspconfig.lua_ls.setup {}
+vim.lsp.enable("lua_ls")
 
 -- Rust
 add('mrcjkb/rustaceanvim')
@@ -292,18 +289,18 @@ vim.filetype.add({
     wgsl = "wgsl",
   }
 })
-lspconfig.wgsl_analyzer.setup {}
+vim.lsp.enable("wgsl_analyzer")
 
 
 -- ZIG
 add('ziglang/zig.vim')
-lspconfig.zls.setup {
-  settings = {
-    zls = {
-      enable_build_on_save = true,
-    }
-  }
-}
+-- vim.lsp.enable("zls")
+--   settings = {
+--     zls = {
+--       enable_build_on_save = true,
+--     }
+--   }
+-- }
 
 dap.configurations.zig = {
   {
@@ -318,35 +315,35 @@ dap.configurations.zig = {
 }
 
 -- Go
-lspconfig.gopls.setup({
-  settings = {
-    gopls = {
-      analyses = {
-        unusedparams = true,
-      },
-      staticcheck = true,
-      gofumpt = true,
-    },
-  },
-})
+-- lspconfig.gopls.setup({
+--   settings = {
+--     gopls = {
+--       analyses = {
+--         unusedparams = true,
+--       },
+--       staticcheck = true,
+--       gofumpt = true,
+--     },
+--   },
+-- })
 
 -- Web
-lspconfig.ts_ls.setup {
-  init_options = {
-    plugins = {
-      {
-        name = "@vue/typescript-plugin",
-        location = "/usr/local/lib/node_modules/@vue/language-server",
-        languages = { "javascript", "typescript", "vue" },
-      }
-    }
-  },
-  filetypes = {
-    "javascript",
-    "typescript",
-    "vue",
-  },
-}
+-- lspconfig.ts_ls.setup {
+--   init_options = {
+--     plugins = {
+--       {
+--         name = "@vue/typescript-plugin",
+--         location = "/usr/local/lib/node_modules/@vue/language-server",
+--         languages = { "javascript", "typescript", "vue" },
+--       }
+--     }
+--   },
+--   filetypes = {
+--     "javascript",
+--     "typescript",
+--     "vue",
+--   },
+-- }
 -- lspconfig.volar.setup {
 --     filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
 --     init_options = {
@@ -362,16 +359,16 @@ lspconfig.ts_ls.setup {
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false
 
-lspconfig.html.setup {
-  capabilities = capabilities
-}
-lspconfig.eslint.setup {}
-lspconfig.cssls.setup {
-  capabilities = capabilities,
-}
+-- lspconfig.html.setup {
+--   capabilities = capabilities
+-- }
+-- lspconfig.eslint.setup {}
+-- lspconfig.cssls.setup {
+--   capabilities = capabilities,
+-- }
 
 -- Python
-lspconfig.pyright.setup({})
+vim.lsp.enable("pyright")
 local group = vim.api.nvim_create_augroup("Black", { clear = true })
 vim.api.nvim_create_autocmd("bufWritePost", {
   pattern = "*.py",
@@ -384,43 +381,43 @@ add('MeanderingProgrammer/render-markdown.nvim')
 require('render-markdown').setup({})
 
 -- C
-lspconfig.clangd.setup({
-  capabilities = capabilities,
-  on_attach = function(client, bufnr)
-    wk.add({
-      { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
-    })
-  end
-})
-
-lspconfig.neocmake.setup({})
-for _, lang in ipairs({ "c", "cpp" }) do
-  dap.configurations[lang] = {
-    {
-      type = "codelldb",
-      request = "launch",
-      name = "Launch file",
-      program = function()
-        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-      end,
-      cwd = "${workspaceFolder}",
-    },
-    {
-      type = "codelldb",
-      request = "attach",
-      name = "Attach to process",
-      pid = require("dap.utils").pick_process,
-      cwd = "${workspaceFolder}",
-    },
-  }
-end
+-- lspconfig.clangd.setup({
+--   capabilities = capabilities,
+--   on_attach = function(client, bufnr)
+--     wk.add({
+--       { "<leader>fh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch header/source" }
+--     })
+--   end
+-- })
+--
+-- lspconfig.neocmake.setup({})
+-- for _, lang in ipairs({ "c", "cpp" }) do
+--   dap.configurations[lang] = {
+--     {
+--       type = "codelldb",
+--       request = "launch",
+--       name = "Launch file",
+--       program = function()
+--         return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+--       end,
+--       cwd = "${workspaceFolder}",
+--     },
+--     {
+--       type = "codelldb",
+--       request = "attach",
+--       name = "Attach to process",
+--       pid = require("dap.utils").pick_process,
+--       cwd = "${workspaceFolder}",
+--     },
+--   }
+-- end
 
 -- GLSL
-lspconfig.glslls.setup {}
+-- lspconfig.glslls.setup {}
 
 -- Godot
-lspconfig.gdscript.setup {}
-lspconfig.gdshader_lsp.setup {}
+-- lspconfig.gdscript.setup {}
+-- lspconfig.gdshader_lsp.setup {}
 
 -- C#
 -- add('Hoffs/omnisharp-extended-lsp.nvim')
@@ -491,14 +488,14 @@ overseer.register_template({
 })
 
 -- Odin
-lspconfig.ols.setup({
-  on_attach = function(client, bufnr)
-    require("lsp_signature").on_attach({}, bufnr)
-  end
-})
+-- lspconfig.ols.setup({
+--   on_attach = function(client, bufnr)
+--     require("lsp_signature").on_attach({}, bufnr)
+--   end
+-- })
 
 -- OCaml
-lspconfig.ocamllsp.setup {}
+-- lspconfig.ocamllsp.setup {}
 
 -- Honey
 vim.filetype.add({
@@ -512,12 +509,8 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 })
 
 -- Gleam
-lspconfig.gleam.setup({})
+vim.lsp.enable("gleam")
 
 -- Elixir
-vim.lsp.enable("expert")
-
--- QML (QT)
-lspconfig.qmlls.setup({
-  cmd = { "qmlls", "-E" }
-})
+add('elixir-tools/elixir-tools.nvim')
+require('elixir').setup()
