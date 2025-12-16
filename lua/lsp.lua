@@ -297,12 +297,13 @@ lspconfig.wgsl_analyzer.setup {}
 
 -- ZIG
 add('ziglang/zig.vim')
-lspconfig.zls.setup {}
--- dap.adapters.lldb = {
---   type = 'executable',
---   command = 'C:\\Program Files\\LLVM\\bin\\lldb-vscode.exe', -- adjust as needed, must be absolute path
---   name = 'lldb'
--- }
+lspconfig.zls.setup {
+  settings = {
+    zls = {
+      enable_build_on_save = true,
+    }
+  }
+}
 
 dap.configurations.zig = {
   {
@@ -512,6 +513,9 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
 -- Gleam
 lspconfig.gleam.setup({})
+
+-- Elixir
+vim.lsp.enable("expert")
 
 -- QML (QT)
 lspconfig.qmlls.setup({
