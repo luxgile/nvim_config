@@ -1,5 +1,4 @@
-# Config
-Mainly uses mini.nvim plugins with some exceptions.
+# 💤 LazyVim
 
-Requires minimal work for this to work. Only make sure to download the necessary 
-lsp needed using Mason (Rust, Lua, etc.)
+A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
+Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
