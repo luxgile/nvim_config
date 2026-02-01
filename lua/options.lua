@@ -23,6 +23,10 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+-- Tabs are 2 spaces
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -70,5 +74,3 @@ vim.o.scrolloff = 10
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
-
--- vim: ts=2 sts=2 sw=2 et

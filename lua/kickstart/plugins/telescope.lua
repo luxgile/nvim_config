@@ -81,6 +81,7 @@ return {
       vim.keymap.set('n', '<leader>q', builtin.diagnostics, { desc = 'Diagnostics' })
       vim.keymap.set('n', '<leader>fr.', builtin.oldfiles, { desc = 'Find Recent files' })
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find Buffers' })
+      vim.keymap.set('n', 'grs', builtin.lsp_workspace_symbols, { desc = 'Find Symbols' })
 
       -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>fc', function()

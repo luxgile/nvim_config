@@ -1,4 +1,5 @@
 return {
+  { 'nvim-mini/mini.icons', opts = {} },
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
     config = function()

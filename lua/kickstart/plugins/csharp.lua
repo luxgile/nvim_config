@@ -1,3 +1,15 @@
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == 'omnisharp' then
+      vim.schedule(function()
+        local bufnr = args.buf
+        vim.keymap.set('n', 'grd', require('omnisharp_extended').telescope_lsp_definitions, { buffer = bufnr, desc = 'Go to definition' })
+      end)
+    end
+  end,
+})
+
 return {
   -- LSP Instalation
   {
@@ -21,15 +33,6 @@ return {
             ['textDocument/definition'] = function(...)
               return require('omnisharp_extended').handler(...)
             end,
-          },
-          keys = {
-            {
-              'gd',
-              function()
-                require('omnisharp_extended').telescope_lsp_definitions()
-              end,
-              desc = 'Goto Definition',
-            },
           },
           enable_roslyn_analyzers = true,
           organize_imports_on_format = true,
