@@ -30,7 +30,7 @@ vim.lsp.config('clangd', {
     '.git',
   },
   on_attach = function()
-    vim.keymap.set('n', 'grh', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = 'Switch Source/Header (C/C++)' })
+    vim.keymap.set('n', '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', { desc = 'Switch Source/Header (C/C++)' })
     require('clangd_extensions').setup()
   end,
 })

@@ -1,10 +1,10 @@
 return {
   'supermaven-inc/supermaven-nvim',
   opts = {
-    disable_inline_completion = true,
-    keymaps = {
-      accept_suggestion = nil,
-    },
+    -- disable_inline_completion = false,
+    -- keymaps = {
+    --   accept_suggestion = nil,
+    -- },
   },
 
   {
