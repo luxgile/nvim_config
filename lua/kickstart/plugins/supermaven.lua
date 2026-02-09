@@ -1,26 +1,21 @@
 return {
-  'supermaven-inc/supermaven-nvim',
-  opts = {
-    -- disable_inline_completion = false,
-    -- keymaps = {
-    --   accept_suggestion = nil,
-    -- },
-  },
-
   {
-    'saghen/blink.cmp',
+    'supermaven-inc/supermaven-nvim',
+    event = 'InsertEnter',
+    cmd = {
+      'SupermavenUseFree',
+      'SupermavenUsePro',
+    },
     opts = {
-      sources = {
-        completion = {
-          enabled_providers = { 'supermaven' },
-        },
-        providers = {
-          supermaven = {
-            name = 'supermaven',
-            module = 'blink.compat.source',
-            score_offset = 3,
-          },
-        },
+      keymaps = {
+        accept_suggestion = '<M-a>',
+        clear_suggestion = '<M-s>',
+        accept_word = '<M-w>',
+      },
+      color = {
+        background = '#1e1e1e',
+        foreground = '#d4be98',
+        border = '#1e1e1e',
       },
     },
   },
