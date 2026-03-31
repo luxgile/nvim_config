@@ -22,7 +22,3 @@ require("conform").setup({
 		cs = { "csharpier" },
 	},
 })
-
-vim.keymap.set("n", "<leader>", function()
-	require("conform").format({ async = true, lsp_format = "fallback" })
-end, { desc = "Move focus to the upper window" })

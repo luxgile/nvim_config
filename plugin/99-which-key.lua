@@ -1,5 +1,20 @@
 vim.pack.add({ "https://github.com/folke/which-key.nvim" })
 
+-- require("which-key").setup({
+-- 	spec = {
+-- 		{ "<leader>", group = "leader", mode = { "n", "v" } },
+-- 	},
+-- 	triggers = {
+-- 		{ "<auto>", mode = "nixsootc" },
+-- 		{ "<leader>", mode = { "n", "v" } },
+-- 	},
+-- })
+
+-- local wk = require("which-key")
+-- wk.add({
+-- 	{ "<leader>t", "<cmd>echo 'It works!'<cr>", desc = "Test Mapping" },
+-- })
+
 require("which-key").setup({
 	delay = 0,
 	triggers = {
