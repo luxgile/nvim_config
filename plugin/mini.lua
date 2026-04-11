@@ -2,10 +2,12 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.ai",
 	"https://github.com/nvim-mini/mini.surround",
 	"https://github.com/nvim-mini/mini.statusline",
+	"https://github.com/nvim-mini/mini.sessions",
 })
 
 require("mini.ai").setup({ n_lines = 500 })
 require("mini.surround").setup()
+require("mini.sessions").setup()
 
 local statusline = require("mini.statusline")
 statusline.setup({ use_icons = vim.g.have_nerd_font })

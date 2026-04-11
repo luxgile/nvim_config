@@ -18,7 +18,7 @@ pcall(require("telescope").load_extension, "ui-select")
 
 -- See `:help telescope.builtin`
 local builtin = require("telescope.builtin")
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help" })
+vim.keymap.set("n", "<leader>fH", builtin.help_tags, { desc = "Help" })
 vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Keymaps" })
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find Files" })
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Find with Grep" })

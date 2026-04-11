@@ -32,13 +32,14 @@ vim.lsp.config("clangd", {
 	on_attach = function()
 		vim.keymap.set(
 			"n",
-			"<leader>ch",
+			"<leader>fh",
 			"<cmd>ClangdSwitchSourceHeader<cr>",
 			{ desc = "Switch Source/Header (C/C++)" }
 		)
 		require("clangd_extensions").setup()
 	end,
 })
+vim.lsp.enable("clangd")
 
 vim.pack.add({
 	"https://github.com/nvim-treesitter/nvim-treesitter",
